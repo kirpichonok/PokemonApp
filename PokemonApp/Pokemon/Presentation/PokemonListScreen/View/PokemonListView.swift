@@ -9,7 +9,3 @@ struct PokemonListView: View {
         }
     }
 }
-
-#Preview {
-    PokemonListView(viewModel: PokemonListViewModel())
-}

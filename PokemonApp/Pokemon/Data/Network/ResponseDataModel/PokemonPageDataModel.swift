@@ -18,3 +18,16 @@ extension PokemonPageDataModel: Decodable
         case previousPagePath = "previous"
     }
 }
+
+extension PokemonPageDataModel
+{
+    func toDomain() -> PokemonPage
+    {
+        .init(
+            list: list.map { $0.toDomain() },
+            totalCount: count,
+            nextPagePath: nextPagePath,
+            previousPagePath: previousPagePath
+        )
+    }
+}

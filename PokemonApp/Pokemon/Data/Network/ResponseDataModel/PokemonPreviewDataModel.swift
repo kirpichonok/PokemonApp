@@ -17,3 +17,11 @@ extension PokemonPageDataModel.PokemonPreviewDataModel: Decodable
         case urlString = "url"
     }
 }
+
+extension PokemonPageDataModel.PokemonPreviewDataModel
+{
+    func toDomain() -> PokemonPreview
+    {
+        .init(name: name, pathToDetails: urlString)
+    }
+}
