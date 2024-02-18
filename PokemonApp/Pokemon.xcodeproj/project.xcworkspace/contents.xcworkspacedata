@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:/Users/kirpichonok/ya-disk/Developer/test-task/innowise/2/PokemonApp/PokemonApp/Pokemon.xcodeproj">
+      location = "self:">
    </FileRef>
 </Workspace>

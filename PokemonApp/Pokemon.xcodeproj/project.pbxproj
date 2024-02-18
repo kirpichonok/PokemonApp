@@ -18,6 +18,8 @@
 		192BF7E92B80CA640023C648 /* PokemonListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192BF7E82B80CA640023C648 /* PokemonListView.swift */; };
 		192BF7EE2B80D07B0023C648 /* PokemonListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192BF7ED2B80D07B0023C648 /* PokemonListViewModel.swift */; };
 		19A2B67B2B81D8E600BD23E7 /* ApiEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A2B67A2B81D8E600BD23E7 /* ApiEndpoint.swift */; };
+		19A2B6832B81F6D600BD23E7 /* CombineMoya in Frameworks */ = {isa = PBXBuildFile; productRef = 19A2B6822B81F6D600BD23E7 /* CombineMoya */; };
+		19A2B6852B81F6D600BD23E7 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 19A2B6842B81F6D600BD23E7 /* Moya */; };
 		19B65FFC2B80F439003853C4 /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B65FFB2B80F439003853C4 /* Page.swift */; };
 		19B65FFE2B80F50B003853C4 /* PokemonClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B65FFD2B80F50B003853C4 /* PokemonClient.swift */; };
 		19B660012B80F6EA003853C4 /* FetchPokemonsPageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B660002B80F6EA003853C4 /* FetchPokemonsPageUseCase.swift */; };
@@ -52,6 +54,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				19A2B6852B81F6D600BD23E7 /* Moya in Frameworks */,
+				19A2B6832B81F6D600BD23E7 /* CombineMoya in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,6 +262,10 @@
 			dependencies = (
 			);
 			name = Pokemon;
+			packageProductDependencies = (
+				19A2B6822B81F6D600BD23E7 /* CombineMoya */,
+				19A2B6842B81F6D600BD23E7 /* Moya */,
+			);
 			productName = PokemonApp;
 			productReference = 192BF7D52B80C8CA0023C648 /* Pokemon.app */;
 			productType = "com.apple.product-type.application";
@@ -286,6 +294,9 @@
 				Base,
 			);
 			mainGroup = 192BF7CC2B80C8CA0023C648;
+			packageReferences = (
+				19A2B6812B81F6D600BD23E7 /* XCRemoteSwiftPackageReference "Moya" */,
+			);
 			productRefGroup = 192BF7D62B80C8CA0023C648 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -530,6 +541,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		19A2B6812B81F6D600BD23E7 /* XCRemoteSwiftPackageReference "Moya" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Moya/Moya.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 15.0.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		19A2B6822B81F6D600BD23E7 /* CombineMoya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 19A2B6812B81F6D600BD23E7 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = CombineMoya;
+		};
+		19A2B6842B81F6D600BD23E7 /* Moya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 19A2B6812B81F6D600BD23E7 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = Moya;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 192BF7CD2B80C8CA0023C648 /* Project object */;
 }
