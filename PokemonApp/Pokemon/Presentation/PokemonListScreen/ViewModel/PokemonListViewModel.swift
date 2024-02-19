@@ -15,24 +15,13 @@ final class PokemonListViewModel: ObservableObject
     }
 
     @Published private(set) var isErrorOccurred = false
+    @Published private(set) var nextPageDisabled = true
+    @Published private(set) var previousPageDisabled = true
 
     // MARK: - Private properties
 
     private let fetchPokemonsUseCase: FetchPokemonsPageUseCase
     private var currentPage: PokemonPage?
-    {
-        didSet
-        {
-            guard let currentPage else { return }
-            Task
-            {
-                await MainActor.run
-                {
-                    listOfPokemons = currentPage.list.map { $0.name }
-                }
-            }
-        }
-    }
 
     init(fetchPokemonsUseCase: FetchPokemonsPageUseCase = FetchPokemonsPageUseCase())
     {
@@ -41,16 +30,31 @@ final class PokemonListViewModel: ObservableObject
 
     // MARK: - Methods
 
-    func fetchPokemonsPage() async
+    func fetchPokemonsPage(_ page: Page) async
     {
         await resetViewModel()
+        let endpoint: ApiEndpoint
+
+        switch page
+        {
+        case .initial:
+            endpoint = .initialPage
+        case .next:
+            guard let nextPagePath = currentPage?.nextPagePath,
+                  let url = URL(string: nextPagePath) else { return }
+            endpoint = .resource(url: url)
+        case .previous:
+            guard let previousPagePath = currentPage?.previousPagePath,
+                  let url = URL(string: previousPagePath) else { return }
+            endpoint = .resource(url: url)
+        }
 
         do
         {
-            let page = try await fetchPokemonsUseCase.execute(with: .initialPage)
+            let page = try await fetchPokemonsUseCase.execute(page)
             await MainActor.run
             {
-                currentPage = page
+                setupNewCurrentPage(page)
             }
         }
         catch
@@ -58,12 +62,23 @@ final class PokemonListViewModel: ObservableObject
             errorMessage = error.localizedDescription
         }
     }
+}
 
+extension PokemonListViewModel
+{
     private func resetViewModel() async
     {
         await MainActor.run
         {
             errorMessage = ""
         }
+    }
+
+    @MainActor private func setupNewCurrentPage(_ page: PokemonPage)
+    {
+        currentPage = page
+        listOfPokemons = page.list.map { $0.name }
+        nextPageDisabled = page.nextPagePath == nil
+        previousPageDisabled = page.previousPagePath == nil
     }
 }

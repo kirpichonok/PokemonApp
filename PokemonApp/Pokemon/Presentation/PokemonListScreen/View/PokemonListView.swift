@@ -6,32 +6,67 @@ struct PokemonListView: View
 
     var body: some View
     {
-        if !viewModel.isErrorOccurred
+        ZStack
         {
-            List(viewModel.listOfPokemons, id: \.self)
+            if !viewModel.isErrorOccurred
             {
-                Text($0)
+                List(viewModel.listOfPokemons, id: \.self)
+                {
+                    Text($0)
+                }
+                .task
+                {
+                    await viewModel.fetchPokemonsPage(.initial)
+                }
             }
-            .task
+
+            else
             {
-                await viewModel.fetchPokemonsPage()
+                VStack(spacing: 20)
+                {
+                    Text(viewModel.errorMessage)
+                        .font(.system(.title3))
+                    Button
+                    {
+                        Task { await viewModel.fetchPokemonsPage(.initial) }
+                    }
+                    label:
+                    {
+                        Image(systemName: .SystemImageName.arrowClockwiseCircle)
+                            .resizable()
+                            .frame(width: 30, height: 30)
+                    }
+                }
             }
         }
-        else
+        .toolbar
         {
-            VStack(spacing: 20)
+            ToolbarItemGroup(placement: .bottomBar)
             {
-                Text(viewModel.errorMessage)
-                    .font(.system(.title3))
-                Button
+                HStack(spacing: 40)
                 {
-                    Task { viewModel.fetchPokemonsPage }
-                }
-                label:
-                {
-                    Image(systemName: .SystemImageName.arrowClockwiseCircle)
-                        .resizable()
-                        .frame(width: 30, height: 30)
+                    Button
+                    {
+                        Task
+                        { await viewModel.fetchPokemonsPage(.previous) }
+                    }
+                    label:
+                    {
+                        Image(systemName: .SystemImageName.chevronBackwardSquare)
+                    }
+                    .allowsHitTesting(!viewModel.previousPageDisabled)
+
+
+                    Button
+                    {
+                        Task
+                        { await viewModel.fetchPokemonsPage(.next) }
+                    }
+                    label:
+                    {
+                        Image(systemName: .SystemImageName.chevronForwardSquare)
+                    }
+                    .allowsHitTesting(!viewModel.nextPageDisabled)
                 }
             }
         }
@@ -45,5 +80,8 @@ struct PokemonListView: View
 
 #Preview
 {
-    PokemonListView(viewModel: PokemonListViewModel())
+    NavigationStack
+    {
+        PokemonListView(viewModel: PokemonListViewModel())
+    }
 }
