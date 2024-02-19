@@ -4,12 +4,12 @@ final class FetchPokemonsPageUseCase
 {
     private let pokemonClient: PokemonClient
 
-    init(pokemonClient: PokemonClient)
+    init(pokemonClient: PokemonClient = DefaultPokemonClient())
     {
         self.pokemonClient = pokemonClient
     }
 
-    func fetchPage(from endpoint: ApiEndpoint) async throws -> PokemonPage
+    func execute(with endpoint: ApiEndpoint) async throws -> PokemonPage
     {
         try await pokemonClient.getPokemonPage(from: endpoint)
     }

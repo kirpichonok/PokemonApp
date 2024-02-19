@@ -1,10 +1,10 @@
 import Foundation
 
-class DefaultPokemonClient: PokemonClient
+final class DefaultPokemonClient: PokemonClient
 {
     private let networkService: NetworkService
 
-    init(networkService: NetworkService)
+    init(networkService: NetworkService = DefaultNetworkService())
     {
         self.networkService = networkService
     }
