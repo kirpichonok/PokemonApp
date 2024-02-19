@@ -9,8 +9,8 @@ final class FetchPokemonsPageUseCase
         self.pokemonClient = pokemonClient
     }
 
-    func execute(with endpoint: ApiEndpoint) async throws -> PokemonPage
+    func execute(_ page: Page) async throws -> PokemonPage
     {
-        try await pokemonClient.getPokemonPage(from: endpoint)
+        try await pokemonClient.getPokemonPage(page)
     }
 }

@@ -33,22 +33,6 @@ final class PokemonListViewModel: ObservableObject
     func fetchPokemonsPage(_ page: Page) async
     {
         await resetViewModel()
-        let endpoint: ApiEndpoint
-
-        switch page
-        {
-        case .initial:
-            endpoint = .initialPage
-        case .next:
-            guard let nextPagePath = currentPage?.nextPagePath,
-                  let url = URL(string: nextPagePath) else { return }
-            endpoint = .resource(url: url)
-        case .previous:
-            guard let previousPagePath = currentPage?.previousPagePath,
-                  let url = URL(string: previousPagePath) else { return }
-            endpoint = .resource(url: url)
-        }
-
         do
         {
             let page = try await fetchPokemonsUseCase.execute(page)
