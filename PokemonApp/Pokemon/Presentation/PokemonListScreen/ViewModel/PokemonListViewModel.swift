@@ -4,9 +4,13 @@ final class PokemonListViewModel: ObservableObject
 {
     // MARK: - Properties
 
+    @MainActor
     @Published private(set) var listOfPokemons = [String]()
+    @MainActor
     @Published private(set) var nextPageDisabled = true
+    @MainActor
     @Published private(set) var previousPageDisabled = true
+    @MainActor
     @Published private(set) var requestState: RequestState = .success
 
     // MARK: - Private properties
@@ -27,13 +31,11 @@ final class PokemonListViewModel: ObservableObject
         {
             requestState = .isLoading
         }
+
         do
         {
             let page = try await fetchPokemonsUseCase.execute(page.toDomain())
-            await MainActor.run
-            {
-                setupNewCurrentPage(page)
-            }
+            await setupNewCurrentPage(page)
         }
         catch
         {
@@ -52,7 +54,7 @@ final class PokemonListViewModel: ObservableObject
 
 extension PokemonListViewModel
 {
-    @MainActor private func setupNewCurrentPage(_ page: PokemonPage)
+    @MainActor private func setupNewCurrentPage(_ page: PokemonPage) async
     {
         requestState = .success
         currentPage = page
