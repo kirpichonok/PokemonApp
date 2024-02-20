@@ -35,7 +35,7 @@ final class PokemonListViewModel: ObservableObject
         await resetViewModel()
         do
         {
-            let page = try await fetchPokemonsUseCase.execute(page)
+            let page = try await fetchPokemonsUseCase.execute(page.toDomain())
             await MainActor.run
             {
                 setupNewCurrentPage(page)
