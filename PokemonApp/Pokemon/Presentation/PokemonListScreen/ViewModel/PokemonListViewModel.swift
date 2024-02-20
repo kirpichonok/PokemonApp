@@ -4,19 +4,10 @@ final class PokemonListViewModel: ObservableObject
 {
     // MARK: - Properties
 
-    @MainActor
     @Published private(set) var listOfPokemons = [String]()
-    private(set) var errorMessage = ""
-    {
-        didSet
-        {
-            isErrorOccurred = !errorMessage.isEmpty
-        }
-    }
-
-    @Published private(set) var isErrorOccurred = false
     @Published private(set) var nextPageDisabled = true
     @Published private(set) var previousPageDisabled = true
+    @Published private(set) var requestState: RequestState = .success
 
     // MARK: - Private properties
 
@@ -32,7 +23,10 @@ final class PokemonListViewModel: ObservableObject
 
     func fetchPokemonsPage(_ page: Page) async
     {
-        await resetViewModel()
+        await MainActor.run
+        {
+            requestState = .isLoading
+        }
         do
         {
             let page = try await fetchPokemonsUseCase.execute(page.toDomain())
@@ -43,23 +37,24 @@ final class PokemonListViewModel: ObservableObject
         }
         catch
         {
-            errorMessage = error.localizedDescription
+            await MainActor.run
+            {
+                requestState = .failed(withError: error)
+            }
         }
+    }
+
+    func reload()
+    {
+        Task { await fetchPokemonsPage(.initial) }
     }
 }
 
 extension PokemonListViewModel
 {
-    private func resetViewModel() async
-    {
-        await MainActor.run
-        {
-            errorMessage = ""
-        }
-    }
-
     @MainActor private func setupNewCurrentPage(_ page: PokemonPage)
     {
+        requestState = .success
         currentPage = page
         listOfPokemons = page.list.map { $0.name }
         nextPageDisabled = page.nextPagePath == nil

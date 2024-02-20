@@ -8,35 +8,30 @@ struct PokemonListView: View
     {
         ZStack
         {
-            if !viewModel.isErrorOccurred
+            List(viewModel.listOfPokemons, id: \.self)
             {
-                List(viewModel.listOfPokemons, id: \.self)
-                {
-                    Text($0)
-                }
-                .task
-                {
-                    await viewModel.fetchPokemonsPage(.initial)
-                }
+                Text($0)
             }
-
-            else
+            .task
             {
-                VStack(spacing: 20)
-                {
-                    Text(viewModel.errorMessage)
-                        .font(.system(.title3))
-                    Button
-                    {
-                        Task { await viewModel.fetchPokemonsPage(.initial) }
-                    }
-                    label:
-                    {
-                        Image(systemName: .SystemImageName.arrowClockwiseCircle)
-                            .resizable()
-                            .frame(width: 30, height: 30)
-                    }
-                }
+                await viewModel.fetchPokemonsPage(.initial)
+            }
+            .disabled(viewModel.requestState != .success)
+            .blur(radius: viewModel.requestState == .success ? 0 : 4)
+
+            if case let .failed(withError: error) = viewModel.requestState
+            {
+                ErrorView(
+                    error: error,
+                    reloadAction: viewModel.reload
+                )
+            }
+            else if case .isLoading = viewModel.requestState
+            {
+                ProgressView()
+                    .progressViewStyle(.circular)
+                    .scaleEffect(2)
+                    .tint(.accentColor)
             }
         }
         .toolbar
@@ -55,7 +50,6 @@ struct PokemonListView: View
                         Image(systemName: .SystemImageName.chevronBackwardSquare)
                     }
                     .allowsHitTesting(!viewModel.previousPageDisabled)
-
 
                     Button
                     {
