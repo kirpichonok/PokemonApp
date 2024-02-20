@@ -94,9 +94,9 @@
 		190342412B80E032004EFDFB /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				19A2B67C2B81DA8A00BD23E7 /* NetworkService */,
+				19B660082B80FE36003853C4 /* NetworkService.swift */,
 				19B6600D2B811CEC003853C4 /* NetworkError.swift */,
-				19A2B67D2B81DAA100BD23E7 /* ApiEndpoint */,
+				19A2B67A2B81D8E600BD23E7 /* ApiEndpoint.swift */,
 				190342422B80E065004EFDFB /* ResponseDataModel */,
 			);
 			path = Network;
@@ -151,6 +151,7 @@
 		192BF7D72B80C8CA0023C648 /* Pokemon */ = {
 			isa = PBXGroup;
 			children = (
+				1955EBEC2B84AA3B00ACA37F /* Infrastructure */,
 				192BF7E62B80C9560023C648 /* App */,
 				192BF7EA2B80CA6B0023C648 /* Presentation */,
 				190342402B80E00B004EFDFB /* Data */,
@@ -212,6 +213,23 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		1955EBEC2B84AA3B00ACA37F /* Infrastructure */ = {
+			isa = PBXGroup;
+			children = (
+				1955EBED2B84AA5A00ACA37F /* Network */,
+			);
+			path = Infrastructure;
+			sourceTree = "<group>";
+		};
+		1955EBED2B84AA5A00ACA37F /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				19A2B6862B81F6FE00BD23E7 /* DefaultNetworkService.swift */,
+				19A2B6882B81F78200BD23E7 /* ApiEndpoint+TargetType.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
 		197E24062B83396800F171AF /* Support */ = {
 			isa = PBXGroup;
 			children = (
@@ -227,24 +245,6 @@
 				197E24042B83396000F171AF /* String+SystemImageName.swift */,
 			);
 			path = Extension;
-			sourceTree = "<group>";
-		};
-		19A2B67C2B81DA8A00BD23E7 /* NetworkService */ = {
-			isa = PBXGroup;
-			children = (
-				19A2B6862B81F6FE00BD23E7 /* DefaultNetworkService.swift */,
-				19B660082B80FE36003853C4 /* NetworkService.swift */,
-			);
-			path = NetworkService;
-			sourceTree = "<group>";
-		};
-		19A2B67D2B81DAA100BD23E7 /* ApiEndpoint */ = {
-			isa = PBXGroup;
-			children = (
-				19A2B67A2B81D8E600BD23E7 /* ApiEndpoint.swift */,
-				19A2B6882B81F78200BD23E7 /* ApiEndpoint+TargetType.swift */,
-			);
-			path = ApiEndpoint;
 			sourceTree = "<group>";
 		};
 		19A2B6802B81F58C00BD23E7 /* Client */ = {
