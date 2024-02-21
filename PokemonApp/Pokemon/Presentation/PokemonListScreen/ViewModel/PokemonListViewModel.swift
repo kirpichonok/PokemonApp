@@ -11,6 +11,10 @@ final class PokemonListViewModel: ObservableObject
 
     private let fetchPokemonsUseCase: FetchPokemonsPageUseCase
     private var currentPage: PokemonPage?
+    private var currentTask: Task<Void, Error>?
+    {
+        willSet { currentTask?.cancel() }
+    }
 
     init(fetchPokemonsUseCase: FetchPokemonsPageUseCase = FetchPokemonsPageUseCase())
     {
@@ -47,21 +51,24 @@ extension PokemonListViewModel
 {
     private func fetchPokemonsPage(number: Int) async
     {
-        do
+        currentTask = Task
         {
-            let newPokemonPage = try await fetchPokemonsUseCase.fetchPokemonList(page: .init(number: number))
-            currentPage = newPokemonPage
-            await MainActor.run
+            do
             {
-                pageViewModel = .init(pokemonPage: newPokemonPage, currentPageNumber: number)
-                requestState = .success
+                let newPokemonPage = try await fetchPokemonsUseCase.fetchPokemonList(page: .init(number: number))
+                currentPage = newPokemonPage
+                await MainActor.run
+                {
+                    pageViewModel = .init(pokemonPage: newPokemonPage, currentPageNumber: number)
+                    requestState = .success
+                }
             }
-        }
-        catch
-        {
-            await MainActor.run
+            catch
             {
-                requestState = .failed(withError: error)
+                await MainActor.run
+                {
+                    requestState = .failed(withError: error)
+                }
             }
         }
     }
