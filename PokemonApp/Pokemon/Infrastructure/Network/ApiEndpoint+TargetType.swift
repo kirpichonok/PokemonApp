@@ -38,8 +38,9 @@ extension ApiEndpoint: TargetType
         switch self
         {
         case let .page(number: pageNumber):
+            let offsetIndex = pageNumber - 1
             return .requestParameters(
-                parameters: ["offset": pageNumber * PokemonPage.pageCapacity,
+                parameters: ["offset": offsetIndex * PokemonPage.pageCapacity,
                              "limit": PokemonPage.pageCapacity],
                 encoding: URLEncoding.default
             )

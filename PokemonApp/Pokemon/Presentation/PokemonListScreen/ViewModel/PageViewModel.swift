@@ -12,7 +12,7 @@ struct PageViewModel
 
     var previousPageDisabled: Bool
     {
-        currentPageNumber <= .zero
+        currentPageNumber <= 1
     }
 
     init(pokemonPage: PokemonPage,
@@ -35,8 +35,8 @@ extension PageViewModel
     static let empty = PageViewModel(
         pokemonPage: PokemonPage(
             list: [],
-            totalCount: 0
+            totalCount: 1
         ),
-        currentPageNumber: 0
+        currentPageNumber: 1
     )
 }

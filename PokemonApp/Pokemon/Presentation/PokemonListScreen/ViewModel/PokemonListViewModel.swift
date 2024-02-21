@@ -27,7 +27,7 @@ final class PokemonListViewModel: ObservableObject
         switch page
         {
         case .initial:
-            newPageNumber = .zero
+            newPageNumber = 1
         case .next:
             newPageNumber = pageViewModel.currentPageNumber + 1
         case .previous:
