@@ -12,10 +12,6 @@ struct PokemonListView: View
             {
                 Text($0)
             }
-            .task
-            {
-                await viewModel.fetchPokemonsPage(.initial)
-            }
             .disabled(viewModel.requestState != .success)
             .blur(radius: viewModel.requestState == .success ? 0 : 4)
 
@@ -29,12 +25,10 @@ struct PokemonListView: View
 
             else if case .isLoading = viewModel.requestState
             {
-                ProgressView()
-                    .progressViewStyle(.circular)
-                    .scaleEffect(2)
-                    .tint(.accentColor)
+                progressView
             }
         }
+        .task { await viewModel.fetchPokemonsPage(.initial) }
         .toolbar
         {
             ToolbarItemGroup(placement: .bottomBar)
@@ -53,10 +47,15 @@ struct PokemonListView: View
             }
         }
     }
+    
+    // MARK: - Private properties
 
-    init(viewModel: PokemonListViewModel)
+    private var progressView: some View
     {
-        self.viewModel = viewModel
+        ProgressView()
+            .progressViewStyle(.circular)
+            .scaleEffect(2)
+            .tint(.accentColor)
     }
 }
 
