@@ -6,41 +6,36 @@ struct PokemonListView: View
 
     var body: some View
     {
-        NavigationStack
+        ZStack
         {
-            ZStack
+            List(
+                viewModel.pageViewModel.listOfPokemons.indices,
+                id: \.self
+            )
+            { index in
+                Button
+                {
+                    viewModel.didSelectRow(index: index)
+                }
+                label: {
+                    Text(viewModel.pageViewModel.listOfPokemons[index])
+                        .tint(.primary)
+                }
+            }
+            .disabled(viewModel.requestState != .success)
+            .blur(radius: viewModel.requestState == .success ? 0 : 4)
+
+            if case let .failed(withError: error) = viewModel.requestState
             {
-                List(viewModel.pageViewModel.listOfPokemons, id: \.self)
-                { name in
-                    NavigationLink(
-                        name,
-                        value: viewModel.currentPage?.list.first
-                        { $0.name.lowercased() == name.lowercased() }
-                    )
-                }
-                .navigationDestination(for: PokemonPreview.self)
-                { pokemonPreview in
-                    PokemonDetailsView(
-                        viewModel: PokemonDetailsViewModel(
-                            pokemonPreview: pokemonPreview
-                        )
-                    )
-                }
-                .disabled(viewModel.requestState != .success)
-                .blur(radius: viewModel.requestState == .success ? 0 : 4)
+                ErrorView(
+                    error: error,
+                    reloadAction: { Task { await viewModel.reload() } }
+                )
+            }
 
-                if case let .failed(withError: error) = viewModel.requestState
-                {
-                    ErrorView(
-                        error: error,
-                        reloadAction: { Task { await viewModel.reload() } }
-                    )
-                }
-
-                else if case .isLoading = viewModel.requestState
-                {
-                    AppProgressView()
-                }
+            else if case .isLoading = viewModel.requestState
+            {
+                AppProgressView()
             }
         }
         .navigationTitle("Pokemons")
@@ -69,6 +64,11 @@ struct PokemonListView: View
 {
     NavigationStack
     {
-        PokemonListView(viewModel: PokemonListViewModel())
+        PokemonListView(
+            viewModel: PokemonListViewModel(
+                fetchPokemonsUseCase: FetchPokemonsPageUseCase(),
+                coordinator: nil
+            )
+        )
     }
 }

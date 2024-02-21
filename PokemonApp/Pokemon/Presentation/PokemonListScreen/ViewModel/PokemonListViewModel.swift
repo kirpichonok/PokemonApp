@@ -10,15 +10,20 @@ final class PokemonListViewModel: ObservableObject
     // MARK: - Private properties
 
     private let fetchPokemonsUseCase: FetchPokemonsPageUseCase
-    private(set) var currentPage: PokemonPage?
+    private weak var coordinator: Coordinator?
+    private var currentPage: PokemonPage?
     private var currentTask: Task<Void, Error>?
     {
         willSet { currentTask?.cancel() }
     }
 
-    init(fetchPokemonsUseCase: FetchPokemonsPageUseCase = FetchPokemonsPageUseCase())
+    init(
+        fetchPokemonsUseCase: FetchPokemonsPageUseCase,
+        coordinator: Coordinator?
+    )
     {
         self.fetchPokemonsUseCase = fetchPokemonsUseCase
+        self.coordinator = coordinator
     }
 
     // MARK: - Methods
@@ -44,6 +49,12 @@ final class PokemonListViewModel: ObservableObject
     func reload() async
     {
         await fetchPokemonsPage(number: pageViewModel.currentPageNumber)
+    }
+    
+    func didSelectRow(index: Int) {
+        if let pokemonPreview = currentPage?.list[index] {
+            coordinator?.push(destination: .detailView(of: pokemonPreview))
+        }
     }
 }
 

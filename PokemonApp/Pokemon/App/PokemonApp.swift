@@ -7,7 +7,8 @@ struct PokemonApp: App
     {
         WindowGroup
         {
-            PokemonListView(viewModel: PokemonListViewModel())
+            CoordinatorRootView()
+                .environmentObject(Coordinator())
         }
     }
 }

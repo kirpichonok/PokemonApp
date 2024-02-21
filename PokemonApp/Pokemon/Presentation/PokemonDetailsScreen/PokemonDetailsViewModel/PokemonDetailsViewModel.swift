@@ -7,6 +7,7 @@ final class PokemonDetailsViewModel: ObservableObject
     @Published private(set) var requestState: RequestState = .success
 
     private let fetchPokemonDetailsUseCase: FetchPokemonDetailsUseCase
+    private weak var coordinator: Coordinator?
     private let pokemonPreview: PokemonPreview
     private var currentTask: Task<Void, Error>?
     {
@@ -15,14 +16,24 @@ final class PokemonDetailsViewModel: ObservableObject
 
     init(
         pokemonPreview: PokemonPreview,
-        fetchPokemonDetailsUseCase: FetchPokemonDetailsUseCase = FetchPokemonDetailsUseCase()
+        fetchPokemonDetailsUseCase: FetchPokemonDetailsUseCase,
+        coordinator: Coordinator?
     )
     {
         self.pokemonPreview = pokemonPreview
         self.fetchPokemonDetailsUseCase = fetchPokemonDetailsUseCase
+        self.coordinator = coordinator
         Task { await fetchPokemonDetails() }
     }
+    
+    func didBackButtonPressed()
+    {
+        coordinator?.pop()
+    }
+}
 
+extension PokemonDetailsViewModel
+{
     @MainActor private func fetchPokemonDetails() async
     {
         await MainActor.run { requestState = .isLoading }

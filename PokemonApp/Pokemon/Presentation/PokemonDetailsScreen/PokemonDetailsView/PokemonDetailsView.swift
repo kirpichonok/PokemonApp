@@ -3,7 +3,6 @@ import SwiftUI
 struct PokemonDetailsView: View
 {
     @StateObject var viewModel: PokemonDetailsViewModel
-    @Environment (\.dismiss) var dismiss
 
     var body: some View
     {
@@ -57,13 +56,29 @@ struct PokemonDetailsView: View
             {
                 ErrorView(
                     error: error,
-                    reloadAction: { dismiss() }
+                    reloadAction: viewModel.didBackButtonPressed
                 )
             }
 
             else if case .isLoading = viewModel.requestState
             {
                 AppProgressView()
+            }
+        }
+        .navigationBarBackButtonHidden()
+        .toolbar
+        {
+            ToolbarItem(placement: .navigationBarLeading)
+            {
+                Button
+                {
+                    viewModel.didBackButtonPressed()
+
+                } label: {
+                    Image(systemName: .SystemImageName.chevronBackward)
+                        .font(.title2)
+                        .foregroundStyle(.primary)
+                }
             }
         }
     }
@@ -78,7 +93,9 @@ struct PokemonDetailsView: View
                 pokemonPreview: PokemonPreview(
                     name: "Pika",
                     pathToDetails: "https://pokeapi.co/api/v2/pokemon/13/"
-                )
+                ),
+                fetchPokemonDetailsUseCase: FetchPokemonDetailsUseCase(),
+                coordinator: nil
             )
         )
     }
