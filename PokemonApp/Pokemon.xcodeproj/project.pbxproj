@@ -21,6 +21,8 @@
 		194893312B8618BC009FE48A /* PokemonDetailsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194893302B8618BC009FE48A /* PokemonDetailsClient.swift */; };
 		194893352B861A5F009FE48A /* PokemonDetailsDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194893342B861A5F009FE48A /* PokemonDetailsDataModel.swift */; };
 		194893372B861C2A009FE48A /* PokemonDetailsDataModel+CodingKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194893362B861C2A009FE48A /* PokemonDetailsDataModel+CodingKeys.swift */; };
+		194893402B862946009FE48A /* Error+convertToClientError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1948933E2B862945009FE48A /* Error+convertToClientError.swift */; };
+		194893412B862946009FE48A /* DefaultPokemonDetailsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1948933F2B862945009FE48A /* DefaultPokemonDetailsClient.swift */; };
 		1955EBEF2B84ABC100ACA37F /* PokemonListViewModel+PageToPresent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1955EBEE2B84ABC100ACA37F /* PokemonListViewModel+PageToPresent.swift */; };
 		1955EBF12B84AD4900ACA37F /* RequestState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1955EBF02B84AD4900ACA37F /* RequestState.swift */; };
 		197E24022B831AB100F171AF /* Moya+async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197E24012B831AB100F171AF /* Moya+async.swift */; };
@@ -62,6 +64,8 @@
 		194893302B8618BC009FE48A /* PokemonDetailsClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonDetailsClient.swift; sourceTree = "<group>"; };
 		194893342B861A5F009FE48A /* PokemonDetailsDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonDetailsDataModel.swift; sourceTree = "<group>"; };
 		194893362B861C2A009FE48A /* PokemonDetailsDataModel+CodingKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PokemonDetailsDataModel+CodingKeys.swift"; sourceTree = "<group>"; };
+		1948933E2B862945009FE48A /* Error+convertToClientError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Error+convertToClientError.swift"; sourceTree = "<group>"; };
+		1948933F2B862945009FE48A /* DefaultPokemonDetailsClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultPokemonDetailsClient.swift; sourceTree = "<group>"; };
 		1955EBEE2B84ABC100ACA37F /* PokemonListViewModel+PageToPresent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PokemonListViewModel+PageToPresent.swift"; sourceTree = "<group>"; };
 		1955EBF02B84AD4900ACA37F /* RequestState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestState.swift; sourceTree = "<group>"; };
 		197E24012B831AB100F171AF /* Moya+async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Moya+async.swift"; sourceTree = "<group>"; };
@@ -246,6 +250,7 @@
 		1948933A2B862579009FE48A /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				1948933E2B862945009FE48A /* Error+convertToClientError.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -297,6 +302,7 @@
 		19A2B6802B81F58C00BD23E7 /* Client */ = {
 			isa = PBXGroup;
 			children = (
+				1948933F2B862945009FE48A /* DefaultPokemonDetailsClient.swift */,
 				19B660042B80FD41003853C4 /* DefaultPokemonClient.swift */,
 				193199802B8393FA0058A647 /* ClientError.swift */,
 				1948933A2B862579009FE48A /* Extension */,
@@ -443,10 +449,12 @@
 				197E24022B831AB100F171AF /* Moya+async.swift in Sources */,
 				19A2B6872B81F6FF00BD23E7 /* DefaultNetworkService.swift in Sources */,
 				194893312B8618BC009FE48A /* PokemonDetailsClient.swift in Sources */,
+				194893402B862946009FE48A /* Error+convertToClientError.swift in Sources */,
 				19FF1EFC2B85DD0600B2F029 /* PageViewModel.swift in Sources */,
 				194893352B861A5F009FE48A /* PokemonDetailsDataModel.swift in Sources */,
 				1955EBEF2B84ABC100ACA37F /* PokemonListViewModel+PageToPresent.swift in Sources */,
 				190342472B80E286004EFDFB /* PokemonPage.swift in Sources */,
+				194893412B862946009FE48A /* DefaultPokemonDetailsClient.swift in Sources */,
 				19FF1F022B86106100B2F029 /* Error+NetworkError.swift in Sources */,
 				19B660012B80F6EA003853C4 /* FetchPokemonsPageUseCase.swift in Sources */,
 				19E5052D2B84E1EE00C0407B /* Error+isConnectionError.swift in Sources */,

@@ -20,16 +20,9 @@ final class DefaultPokemonClient: PokemonClient
         }
         catch
         {
-            throw mapToClientError(error)
+            throw error.convertToClientError()
         }
     }
 }
 
-extension DefaultPokemonClient
-{
-    private func mapToClientError(_ error: Error) -> ClientError
-    {
-        guard let error = error as? NetworkError else { return .unknown(error) }
-        return ClientError.networkError(error)
-    }
-}
+

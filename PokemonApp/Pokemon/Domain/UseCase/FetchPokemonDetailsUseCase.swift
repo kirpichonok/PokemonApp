@@ -1,10 +1,10 @@
 import Foundation
 
-class FetchPokemonDetailsUseCase
+final class FetchPokemonDetailsUseCase
 {
     private let pokemonDetailsClient: PokemonDetailsClient
 
-    init(pokemonDetailsClient: PokemonDetailsClient)
+    init(pokemonDetailsClient: PokemonDetailsClient = DefaultPokemonDetailsClient())
     {
         self.pokemonDetailsClient = pokemonDetailsClient
     }
