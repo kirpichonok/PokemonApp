@@ -2,7 +2,7 @@ import SwiftUI
 
 struct PokemonListView: View
 {
-    @ObservedObject var viewModel: PokemonListViewModel
+    @StateObject var viewModel: PokemonListViewModel
 
     var body: some View
     {
