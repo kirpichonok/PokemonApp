@@ -53,6 +53,7 @@ extension PokemonListViewModel
     {
         currentTask = Task
         {
+            defer { currentTask = nil }
             do
             {
                 let newPokemonPage = try await fetchPokemonsUseCase.fetchPokemonList(page: .init(number: number))
