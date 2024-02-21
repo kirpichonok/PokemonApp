@@ -28,6 +28,7 @@ struct PokemonListView: View
                 progressView
             }
         }
+        .navigationTitle("Pokemons")
         .task { await viewModel.fetchPokemonsPage(.initial) }
         .toolbar
         {
