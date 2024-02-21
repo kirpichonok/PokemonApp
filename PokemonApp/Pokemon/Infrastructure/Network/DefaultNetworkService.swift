@@ -1,3 +1,4 @@
+import Alamofire
 import Foundation
 import Moya
 
@@ -50,15 +51,13 @@ final class DefaultNetworkService: NetworkService
 
     private func mapUnderlyingError(_ error: Error) -> NetworkError
     {
-        let code = URLError.Code(rawValue: (error as NSError).code)
-        switch code
+        if let error = error as? AFError
         {
-        case .notConnectedToInternet, .networkConnectionLost, .cannotConnectToHost:
-            return .connectionFailed
-        case .timedOut:
-            return .timedOut
-        default:
-            return .unknown(error)
+            return error.convertToNetworkError
+        }
+        else
+        {
+            return error.convertToNetworkError
         }
     }
 }
