@@ -10,7 +10,7 @@ final class PokemonListViewModel: ObservableObject
     // MARK: - Private properties
 
     private let fetchPokemonsUseCase: FetchPokemonsPageUseCase
-    private var currentPage: PokemonPage?
+    private(set) var currentPage: PokemonPage?
     private var currentTask: Task<Void, Error>?
     {
         willSet { currentTask?.cancel() }

@@ -6,26 +6,41 @@ struct PokemonListView: View
 
     var body: some View
     {
-        ZStack
+        NavigationStack
         {
-            List(viewModel.pageViewModel.listOfPokemons, id: \.self)
+            ZStack
             {
-                Text($0)
-            }
-            .disabled(viewModel.requestState != .success)
-            .blur(radius: viewModel.requestState == .success ? 0 : 4)
+                List(viewModel.pageViewModel.listOfPokemons, id: \.self)
+                { name in
+                    NavigationLink(
+                        name,
+                        value: viewModel.currentPage?.list.first
+                        { $0.name.lowercased() == name.lowercased() }
+                    )
+                }
+                .navigationDestination(for: PokemonPreview.self)
+                { pokemonPreview in
+                    PokemonDetailsView(
+                        viewModel: PokemonDetailsViewModel(
+                            pokemonPreview: pokemonPreview
+                        )
+                    )
+                }
+                .disabled(viewModel.requestState != .success)
+                .blur(radius: viewModel.requestState == .success ? 0 : 4)
 
-            if case let .failed(withError: error) = viewModel.requestState
-            {
-                ErrorView(
-                    error: error,
-                    reloadAction: { Task { await viewModel.reload() } }
-                )
-            }
+                if case let .failed(withError: error) = viewModel.requestState
+                {
+                    ErrorView(
+                        error: error,
+                        reloadAction: { Task { await viewModel.reload() } }
+                    )
+                }
 
-            else if case .isLoading = viewModel.requestState
-            {
-                progressView
+                else if case .isLoading = viewModel.requestState
+                {
+                    AppProgressView()
+                }
             }
         }
         .navigationTitle("Pokemons")
@@ -47,16 +62,6 @@ struct PokemonListView: View
                 )
             }
         }
-    }
-    
-    // MARK: - Private properties
-
-    private var progressView: some View
-    {
-        ProgressView()
-            .progressViewStyle(.circular)
-            .scaleEffect(2)
-            .tint(.accentColor)
     }
 }
 
