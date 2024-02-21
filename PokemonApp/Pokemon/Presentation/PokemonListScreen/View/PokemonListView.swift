@@ -26,6 +26,7 @@ struct PokemonListView: View
                     reloadAction: { Task { await viewModel.reload() } }
                 )
             }
+
             else if case .isLoading = viewModel.requestState
             {
                 ProgressView()
@@ -38,30 +39,17 @@ struct PokemonListView: View
         {
             ToolbarItemGroup(placement: .bottomBar)
             {
-                HStack(spacing: 40)
-                {
-                    Button
-                    {
+                SwitchPageView(
+                    pageViewModel: viewModel.pageViewModel,
+                    backAction: {
                         Task
                         { await viewModel.fetchPokemonsPage(.previous) }
-                    }
-                    label:
-                    {
-                        Image(systemName: .SystemImageName.chevronBackwardSquare)
-                    }
-                    .allowsHitTesting(!viewModel.pageViewModel.previousPageDisabled)
-
-                    Button
-                    {
+                    },
+                    nextAction: {
                         Task
                         { await viewModel.fetchPokemonsPage(.next) }
                     }
-                    label:
-                    {
-                        Image(systemName: .SystemImageName.chevronForwardSquare)
-                    }
-                    .allowsHitTesting(!viewModel.pageViewModel.nextPageDisabled)
-                }
+                )
             }
         }
     }
