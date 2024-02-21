@@ -8,7 +8,7 @@ struct PokemonListView: View
     {
         ZStack
         {
-            List(viewModel.listOfPokemons, id: \.self)
+            List(viewModel.pageViewModel.listOfPokemons, id: \.self)
             {
                 Text($0)
             }
@@ -49,7 +49,7 @@ struct PokemonListView: View
                     {
                         Image(systemName: .SystemImageName.chevronBackwardSquare)
                     }
-                    .allowsHitTesting(!viewModel.previousPageDisabled)
+                    .allowsHitTesting(!viewModel.pageViewModel.previousPageDisabled)
 
                     Button
                     {
@@ -60,7 +60,7 @@ struct PokemonListView: View
                     {
                         Image(systemName: .SystemImageName.chevronForwardSquare)
                     }
-                    .allowsHitTesting(!viewModel.nextPageDisabled)
+                    .allowsHitTesting(!viewModel.pageViewModel.nextPageDisabled)
                 }
             }
         }

@@ -4,21 +4,13 @@ final class PokemonListViewModel: ObservableObject
 {
     // MARK: - Properties
 
-    @Published private(set) var listOfPokemons = [String]()
-    @Published private(set) var nextPageDisabled = true
-    @Published private(set) var previousPageDisabled = true
+    @Published private(set) var pageViewModel = PageViewModel.empty
     @Published private(set) var requestState: RequestState = .success
-    @Published private(set) var currentPageNumber = 0
-    @Published private(set) var numberOfPages = 0
 
     // MARK: - Private properties
 
     private let fetchPokemonsUseCase: FetchPokemonsPageUseCase
     private var currentPage: PokemonPage?
-    {
-        didSet
-        { Task { await updateCorrespondingNewPage() }}
-    }
 
     init(fetchPokemonsUseCase: FetchPokemonsPageUseCase = FetchPokemonsPageUseCase())
     {
@@ -37,9 +29,9 @@ final class PokemonListViewModel: ObservableObject
         case .initial:
             newPageNumber = .zero
         case .next:
-            newPageNumber = currentPageNumber + 1
+            newPageNumber = pageViewModel.currentPageNumber + 1
         case .previous:
-            newPageNumber = currentPageNumber - 1
+            newPageNumber = pageViewModel.currentPageNumber - 1
         }
 
         await fetchPokemonsPage(number: newPageNumber)
@@ -47,7 +39,7 @@ final class PokemonListViewModel: ObservableObject
 
     func reload() async
     {
-        await fetchPokemonsPage(number: currentPageNumber)
+        await fetchPokemonsPage(number: pageViewModel.currentPageNumber)
     }
 }
 
@@ -57,38 +49,20 @@ extension PokemonListViewModel
     {
         do
         {
-            currentPage = try await fetchPokemonsUseCase.fetchPokemonList(page: .init(number: number))
-            await MainActor.run { currentPageNumber = number }
+            let newPokemonPage = try await fetchPokemonsUseCase.fetchPokemonList(page: .init(number: number))
+            currentPage = newPokemonPage
+            await MainActor.run
+            {
+                pageViewModel = .init(pokemonPage: newPokemonPage, currentPageNumber: number)
+                requestState = .success
+            }
         }
         catch
         {
-            requestState = .failed(withError: error)
+            await MainActor.run
+            {
+                requestState = .failed(withError: error)
+            }
         }
-    }
-
-    @MainActor private func updateCorrespondingNewPage() async
-    {
-        requestState = .success
-        if let currentPage
-        {
-            listOfPokemons = currentPage.list.map { $0.name.capitalized }
-
-            calculateNumberOfPages(totalCount: currentPage.totalCount)
-
-            nextPageDisabled = currentPageNumber >= numberOfPages
-            previousPageDisabled = currentPageNumber <= .zero
-        }
-        else {
-            numberOfPages = .zero
-            currentPageNumber = .zero
-            nextPageDisabled = false
-            previousPageDisabled = false
-        }
-    }
-
-    private func calculateNumberOfPages(totalCount: Int)
-    {
-        let devisionResult = (Double(totalCount) / Double(PokemonPage.pageCapacity))
-        numberOfPages = Int(ceil(devisionResult))
     }
 }

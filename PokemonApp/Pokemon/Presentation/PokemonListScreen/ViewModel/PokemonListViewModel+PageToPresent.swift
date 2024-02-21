@@ -8,4 +8,6 @@ extension PokemonListViewModel
         case next
         case previous
     }
+    
+    
 }
