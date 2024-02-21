@@ -10,7 +10,7 @@ extension ApiEndpoint: TargetType
         case .page:
             guard let url = URL(string: AppConfiguration.baseURL) else { fatalError("Invalid base URL.") }
             return url
-        case let .resource(url: url):
+        case let .pokemonDetails(url: url):
             return url
         }
     }
@@ -19,7 +19,7 @@ extension ApiEndpoint: TargetType
     {
         switch self
         {
-        case .page, .resource:
+        case .page, .pokemonDetails:
             return ""
         }
     }
@@ -28,7 +28,7 @@ extension ApiEndpoint: TargetType
     {
         switch self
         {
-        case .page, .resource:
+        case .page, .pokemonDetails:
             return .get
         }
     }
@@ -44,7 +44,7 @@ extension ApiEndpoint: TargetType
                              "limit": PokemonPage.pageCapacity],
                 encoding: URLEncoding.default
             )
-        case .resource:
+        case .pokemonDetails:
             return .requestPlain
         }
     }
