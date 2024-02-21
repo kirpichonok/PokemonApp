@@ -2,7 +2,7 @@ import Foundation
 
 extension Error
 {
-    var convertToNetworkError: NetworkError
+    func convertToNetworkError() -> NetworkError
     {
         let code = URLError.Code(rawValue: (self as NSError).code)
         switch code

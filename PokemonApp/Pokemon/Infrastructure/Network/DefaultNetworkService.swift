@@ -53,11 +53,11 @@ final class DefaultNetworkService: NetworkService
     {
         if let error = error as? AFError
         {
-            return error.convertToNetworkError
+            return error.convertToNetworkError()
         }
         else
         {
-            return error.convertToNetworkError
+            return error.convertToNetworkError()
         }
     }
 }

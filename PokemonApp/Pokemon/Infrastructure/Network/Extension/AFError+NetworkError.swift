@@ -3,7 +3,7 @@ import Foundation
 
 extension AFError
 {
-    var convertToNetworkError: NetworkError
+    func convertToNetworkError() -> NetworkError
     {
         let connectionFailureStatusCodes = [
             URLError.notConnectedToInternet,
