@@ -1,5 +1,9 @@
-enum Page {
-    case initial
-    case next
-    case previous
+struct Page
+{
+    let number: Int
+
+    init(number: Int)
+    {
+        self.number = abs(number)
+    }
 }

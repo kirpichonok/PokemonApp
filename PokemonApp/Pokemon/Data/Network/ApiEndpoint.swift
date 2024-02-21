@@ -2,7 +2,7 @@ import Foundation
 
 enum ApiEndpoint
 {
-    case initialPage
+    case page(number: Int)
     case resource(url: URL)
 }
 
@@ -12,7 +12,7 @@ extension ApiEndpoint
     {
         switch self
         {
-        case .initialPage, .resource:
+        case .page, .resource:
             return JSONDecoder()
         }
     }

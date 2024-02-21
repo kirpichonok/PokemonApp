@@ -9,8 +9,8 @@ final class FetchPokemonsPageUseCase
         self.pokemonClient = pokemonClient
     }
 
-    func execute(_ page: Page) async throws -> PokemonPage
+    func fetchPokemonList(page: Page) async throws -> PokemonPage
     {
-        try await pokemonClient.getPokemonPage(page)
+        try await pokemonClient.getPokemonList(page: page)
     }
 }

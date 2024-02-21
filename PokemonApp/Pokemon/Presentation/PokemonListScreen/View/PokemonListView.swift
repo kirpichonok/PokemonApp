@@ -23,7 +23,7 @@ struct PokemonListView: View
             {
                 ErrorView(
                     error: error,
-                    reloadAction: viewModel.reload
+                    reloadAction: { Task { await viewModel.reload() } }
                 )
             }
             else if case .isLoading = viewModel.requestState
