@@ -12,6 +12,8 @@ extension ApiEndpoint: TargetType
             return url
         case let .pokemonDetails(url: url):
             return url
+        case let .image(url: url):
+            return url
         }
     }
 
@@ -19,7 +21,7 @@ extension ApiEndpoint: TargetType
     {
         switch self
         {
-        case .page, .pokemonDetails:
+        case .page, .pokemonDetails, .image:
             return ""
         }
     }
@@ -28,7 +30,7 @@ extension ApiEndpoint: TargetType
     {
         switch self
         {
-        case .page, .pokemonDetails:
+        case .page, .pokemonDetails, .image:
             return .get
         }
     }
@@ -44,7 +46,7 @@ extension ApiEndpoint: TargetType
                              "limit": PokemonPage.pageCapacity],
                 encoding: URLEncoding.default
             )
-        case .pokemonDetails:
+        case .pokemonDetails, .image:
             return .requestPlain
         }
     }

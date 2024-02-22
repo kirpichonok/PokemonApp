@@ -14,9 +14,18 @@ final class DefaultNetworkService: NetworkService
     {
         do
         {
-            return try await moyaProvider.request(endpoint)
+            let response = try await moyaProvider.request(endpoint)
                 .filterSuccessfulStatusCodes()
-                .map(T.self, using: endpoint.responseDecoder)
+
+            if T.self is Data.Type,
+               let data = response.data as? T
+            {
+                return data
+            }
+            else
+            {
+                return try response.map(T.self, using: endpoint.responseDecoder)
+            }
         }
         catch
         {

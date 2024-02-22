@@ -4,6 +4,7 @@ enum ApiEndpoint
 {
     case page(number: Int)
     case pokemonDetails(url: URL)
+    case image(url: URL)
 }
 
 extension ApiEndpoint
@@ -12,7 +13,7 @@ extension ApiEndpoint
     {
         switch self
         {
-        case .page, .pokemonDetails:
+        case .page, .pokemonDetails, .image:
             return JSONDecoder()
         }
     }

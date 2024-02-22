@@ -43,11 +43,9 @@ extension PokemonDetailsViewModel
             let pokemon = try await fetchPokemonDetailsUseCase.fetchPokemonDetails(for: pokemonPreview)
             var imageData: Data?
 
-            if let imagePath = pokemon.imagePath,
-               let url = URL(string: imagePath)
+            if let imagePath = pokemon.imagePath
             {
-                let (data, _) = try await URLSession.shared.data(from: url)
-                imageData = data
+                imageData = try await fetchPokemonDetailsUseCase.fetchPokemonImage(with: imagePath)
             }
 
             await MainActor.run

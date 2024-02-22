@@ -26,7 +26,7 @@ final class AppDIContainer
 
     private func makeFetchPokemonDetailsUseCase() -> FetchPokemonDetailsUseCase
     {
-        .init(pokemonDetailsClient: makePokemonDetailsClient())
+        .init(pokemonDetailsClient: makePokemonDetailsClient(), pokemonImageClient: makePokemonImageClient())
     }
 
     private func makeFetchPokemonsPageUseCase() -> FetchPokemonsPageUseCase
@@ -44,5 +44,10 @@ final class AppDIContainer
     private func makePokemonClient() -> PokemonClient
     {
         DefaultPokemonClient(networkService: defaultNetworkService)
+    }
+
+    private func makePokemonImageClient() -> PokemonImageClient
+    {
+        DefaultPokemonImageClient(networkService: defaultNetworkService)
     }
 }
