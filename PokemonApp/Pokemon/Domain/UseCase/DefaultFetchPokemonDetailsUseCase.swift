@@ -1,6 +1,6 @@
 import Foundation
 
-final class FetchPokemonDetailsUseCase
+final class DefaultFetchPokemonDetailsUseCase : FetchPokemonDetailsUseCase
 {
     private let pokemonDetailsClient: PokemonDetailsClient
     private let pokemonImageClient: PokemonImageClient
@@ -18,7 +18,7 @@ final class FetchPokemonDetailsUseCase
     {
         try await pokemonDetailsClient.getPokemonDetails(for: pokemon)
     }
-    
+
     func fetchPokemonImage(with path: String) async throws -> Data
     {
         try await pokemonImageClient.getImage(with: path)

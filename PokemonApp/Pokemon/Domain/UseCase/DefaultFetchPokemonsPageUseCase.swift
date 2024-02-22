@@ -1,6 +1,6 @@
 import Foundation
 
-final class FetchPokemonsPageUseCase
+final class DefaultFetchPokemonsPageUseCase: FetchPokemonsPageUseCase
 {
     private let pokemonClient: PokemonClient
 

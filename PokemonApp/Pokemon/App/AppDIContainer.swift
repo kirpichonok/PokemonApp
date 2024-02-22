@@ -26,12 +26,15 @@ final class AppDIContainer
 
     private func makeFetchPokemonDetailsUseCase() -> FetchPokemonDetailsUseCase
     {
-        .init(pokemonDetailsClient: makePokemonDetailsClient(), pokemonImageClient: makePokemonImageClient())
+        DefaultFetchPokemonDetailsUseCase(
+            pokemonDetailsClient: makePokemonDetailsClient(),
+            pokemonImageClient: makePokemonImageClient()
+        )
     }
 
     private func makeFetchPokemonsPageUseCase() -> FetchPokemonsPageUseCase
     {
-        .init(pokemonClient: makePokemonClient())
+        DefaultFetchPokemonsPageUseCase(pokemonClient: makePokemonClient())
     }
 
     // MARK: - Client
