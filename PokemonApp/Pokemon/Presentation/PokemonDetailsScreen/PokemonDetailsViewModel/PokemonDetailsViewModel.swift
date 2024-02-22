@@ -9,6 +9,18 @@ final class PokemonDetailsViewModel: ObservableObject
     private let fetchPokemonDetailsUseCase: FetchPokemonDetailsUseCase
     private weak var coordinator: Coordinator?
     private let pokemonPreview: PokemonPreview
+    private var pokemon: Pokemon?
+    {
+        didSet
+        {
+            if let pokemon
+            {
+                pokemonDescription = .init(pokemon: pokemon)
+                currentTask = Task { await fetchImage() }
+            }
+        }
+    }
+
     private var currentTask: Task<Void, Error>?
     {
         willSet { currentTask?.cancel() }
@@ -23,9 +35,9 @@ final class PokemonDetailsViewModel: ObservableObject
         self.pokemonPreview = pokemonPreview
         self.fetchPokemonDetailsUseCase = fetchPokemonDetailsUseCase
         self.coordinator = coordinator
-        Task { await fetchPokemonDetails() }
+        currentTask = Task { await fetchPokemonDetails() }
     }
-    
+
     func didBackButtonPressed()
     {
         currentTask?.cancel()
@@ -37,29 +49,35 @@ extension PokemonDetailsViewModel
 {
     @MainActor private func fetchPokemonDetails() async
     {
-        await MainActor.run { requestState = .isLoading }
+        requestState = .isLoading
         do
         {
             let pokemon = try await fetchPokemonDetailsUseCase.fetchPokemonDetails(for: pokemonPreview)
-            var imageData: Data?
-
-            if let imagePath = pokemon.imagePath
+            if currentTask != nil, !currentTask!.isCancelled
             {
-                imageData = try await fetchPokemonDetailsUseCase.fetchPokemonImage(with: imagePath)
-            }
-
-            await MainActor.run
-            {
-                self.imageData = imageData
-                pokemonDescription = .init(pokemon: pokemon)
                 requestState = .success
+                self.pokemon = pokemon
             }
         }
         catch
         {
-            await MainActor.run
+            requestState = .failed(withError: error)
+        }
+    }
+
+    @MainActor private func fetchImage() async
+    {
+        if let imagePath = pokemon?.imagePath
+        {
+            imageData = try? await fetchPokemonDetailsUseCase.fetchPokemonImage(with: imagePath)
+
+            if let imageData,
+               currentTask != nil,
+               !currentTask!.isCancelled
             {
-                requestState = .failed(withError: error)
+                self.imageData = imageData
+                requestState = .success
+                currentTask = nil
             }
         }
     }
