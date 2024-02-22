@@ -759,11 +759,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		19A2B6822B81F6D600BD23E7 /* CombineMoya */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 19A2B6812B81F6D600BD23E7 /* XCRemoteSwiftPackageReference "Moya" */;
-			productName = CombineMoya;
-		};
 		19A2B6842B81F6D600BD23E7 /* Moya */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 19A2B6812B81F6D600BD23E7 /* XCRemoteSwiftPackageReference "Moya" */;
