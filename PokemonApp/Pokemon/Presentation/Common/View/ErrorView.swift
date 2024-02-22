@@ -49,7 +49,7 @@ struct ErrorView: View
             .padding([.top], 30)
         }
         .padding()
-        .background(.windowBackground)
+        .background(.bar)
         .clipShape(RoundedRectangle(cornerRadius: 25.0))
         .shadow(radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
     }
