@@ -39,7 +39,6 @@ struct PokemonListView: View
             }
         }
         .navigationTitle("Pokemons")
-        .task { await viewModel.fetchPokemonsPage(.initial) }
         .toolbar
         {
             ToolbarItemGroup(placement: .bottomBar)
@@ -47,12 +46,10 @@ struct PokemonListView: View
                 SwitchPageView(
                     pageViewModel: viewModel.pageViewModel,
                     backAction: {
-                        Task
-                        { await viewModel.fetchPokemonsPage(.previous) }
+                        viewModel.fetchPokemonsPage(.previous)
                     },
                     nextAction: {
-                        Task
-                        { await viewModel.fetchPokemonsPage(.next) }
+                        viewModel.fetchPokemonsPage(.next)
                     }
                 )
             }

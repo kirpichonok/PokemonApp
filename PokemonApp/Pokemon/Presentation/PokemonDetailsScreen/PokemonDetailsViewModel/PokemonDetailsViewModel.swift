@@ -28,6 +28,7 @@ final class PokemonDetailsViewModel: ObservableObject
     
     func didBackButtonPressed()
     {
+        currentTask?.cancel()
         coordinator?.pop()
     }
 }
