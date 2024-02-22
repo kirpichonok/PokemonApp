@@ -4,7 +4,7 @@ final class FetchPokemonsPageUseCase
 {
     private let pokemonClient: PokemonClient
 
-    init(pokemonClient: PokemonClient = DefaultPokemonClient())
+    init(pokemonClient: PokemonClient)
     {
         self.pokemonClient = pokemonClient
     }

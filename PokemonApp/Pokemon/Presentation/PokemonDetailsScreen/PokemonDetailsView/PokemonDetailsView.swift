@@ -88,15 +88,13 @@ struct PokemonDetailsView: View
 {
     NavigationStack
     {
-        PokemonDetailsView(
-            viewModel: PokemonDetailsViewModel(
-                pokemonPreview: PokemonPreview(
-                    name: "Pika",
-                    pathToDetails: "https://pokeapi.co/api/v2/pokemon/13/"
-                ),
-                fetchPokemonDetailsUseCase: FetchPokemonDetailsUseCase(),
-                coordinator: nil
-            )
+        let viewModel = AppDIContainer().makePokemonDetailsViewModel(
+            with: PokemonPreview(
+                name: "Pika",
+                pathToDetails: "https://pokeapi.co/api/v2/pokemon/13/"
+            ),
+            coordinator: nil
         )
+        return PokemonDetailsView(viewModel: viewModel)
     }
 }

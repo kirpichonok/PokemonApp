@@ -4,6 +4,8 @@ final class Coordinator: ObservableObject
 {
     @Published var path = NavigationPath()
 
+    private let appDiContainer = AppDIContainer()
+
     // MARK: - Methods
 
     func push(destination: DestinationScreen)
@@ -26,30 +28,15 @@ final class Coordinator: ObservableObject
         switch destination
         {
         case .pokemonList:
-            let viewModel = makePokemonListViewModel()
+            let viewModel = appDiContainer.makePokemonListViewModel(with: self)
             PokemonListView(viewModel: viewModel)
 
         case let .detailView(of: pokemonPreview):
-            let viewModel = makePokemonDetailsViewModel(with: pokemonPreview)
+            let viewModel = appDiContainer.makePokemonDetailsViewModel(
+                with: pokemonPreview,
+                coordinator: self
+            )
             PokemonDetailsView(viewModel: viewModel)
         }
-    }
-}
-
-extension Coordinator
-{
-    // MARK: - Private methods
-
-    private func makePokemonDetailsViewModel(with pokemonPreview: PokemonPreview) -> PokemonDetailsViewModel
-    {
-        .init(pokemonPreview: pokemonPreview,
-              fetchPokemonDetailsUseCase: FetchPokemonDetailsUseCase(),
-              coordinator: self)
-    }
-
-    private func makePokemonListViewModel() -> PokemonListViewModel
-    {
-        .init(fetchPokemonsUseCase: FetchPokemonsPageUseCase(),
-              coordinator: self)
     }
 }

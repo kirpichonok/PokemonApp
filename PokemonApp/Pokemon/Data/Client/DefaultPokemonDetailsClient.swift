@@ -4,7 +4,7 @@ final class DefaultPokemonDetailsClient: PokemonDetailsClient
 {
     private let networkService: NetworkService
 
-    init(networkService: NetworkService = DefaultNetworkService())
+    init(networkService: NetworkService )
     {
         self.networkService = networkService
     }

@@ -61,11 +61,8 @@ struct PokemonListView: View
 {
     NavigationStack
     {
-        PokemonListView(
-            viewModel: PokemonListViewModel(
-                fetchPokemonsUseCase: FetchPokemonsPageUseCase(),
-                coordinator: nil
-            )
-        )
+        let viewModel = AppDIContainer().makePokemonListViewModel(with: nil)
+        return PokemonListView(viewModel:viewModel)
+        
     }
 }

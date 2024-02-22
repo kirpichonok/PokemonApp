@@ -4,7 +4,7 @@ final class FetchPokemonDetailsUseCase
 {
     private let pokemonDetailsClient: PokemonDetailsClient
 
-    init(pokemonDetailsClient: PokemonDetailsClient = DefaultPokemonDetailsClient())
+    init( pokemonDetailsClient: PokemonDetailsClient)
     {
         self.pokemonDetailsClient = pokemonDetailsClient
     }
