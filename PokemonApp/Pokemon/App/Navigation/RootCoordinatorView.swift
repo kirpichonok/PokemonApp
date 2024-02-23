@@ -2,7 +2,7 @@ import SwiftUI
 
 struct CoordinatorRootView: View
 {
-    @EnvironmentObject private var coordinator: Coordinator
+    @EnvironmentObject private var coordinator: AppCoordinator
 
     var body: some View
     {
@@ -20,5 +20,5 @@ struct CoordinatorRootView: View
 
 #Preview
 {
-    CoordinatorRootView().environmentObject(Coordinator())
+    CoordinatorRootView().environmentObject(AppCoordinator())
 }

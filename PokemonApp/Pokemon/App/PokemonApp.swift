@@ -8,7 +8,7 @@ struct PokemonApp: App
         WindowGroup
         {
             CoordinatorRootView()
-                .environmentObject(Coordinator())
+                .environmentObject(AppCoordinator())
         }
     }
 }

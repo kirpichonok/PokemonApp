@@ -7,7 +7,7 @@ final class PokemonDetailsViewModel: ObservableObject
     @Published private(set) var requestState: RequestState = .success
 
     private let fetchPokemonDetailsUseCase: FetchPokemonDetailsUseCase
-    private weak var coordinator: Coordinator?
+    private weak var coordinator: (any Coordinator)?
     private let pokemonPreview: PokemonPreview
     private var pokemon: Pokemon?
     {
@@ -29,7 +29,7 @@ final class PokemonDetailsViewModel: ObservableObject
     init(
         pokemonPreview: PokemonPreview,
         fetchPokemonDetailsUseCase: FetchPokemonDetailsUseCase,
-        coordinator: Coordinator?
+        coordinator: (any Coordinator)?
     )
     {
         self.pokemonPreview = pokemonPreview

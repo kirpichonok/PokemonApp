@@ -8,7 +8,7 @@ final class AppDIContainer
 
     func makePokemonDetailsViewModel(
         with pokemonPreview: PokemonPreview,
-        coordinator: Coordinator?
+        coordinator: (any Coordinator)?
     ) -> PokemonDetailsViewModel
     {
         .init(pokemonPreview: pokemonPreview,
@@ -16,7 +16,7 @@ final class AppDIContainer
               coordinator: coordinator)
     }
 
-    func makePokemonListViewModel(with coordinator: Coordinator?) -> PokemonListViewModel
+    func makePokemonListViewModel(with coordinator: (any Coordinator)?) -> PokemonListViewModel
     {
         .init(fetchPokemonsUseCase: makeFetchPokemonsPageUseCase(),
               coordinator: coordinator)

@@ -10,7 +10,7 @@ final class PokemonListViewModel: ObservableObject
     // MARK: - Private properties
 
     private let fetchPokemonsUseCase: FetchPokemonsPageUseCase
-    private weak var coordinator: Coordinator?
+    private weak var coordinator: (any Coordinator)?
     private var currentPage: PokemonPage?
     private var currentTask: Task<Void, Error>?
     {
@@ -19,7 +19,7 @@ final class PokemonListViewModel: ObservableObject
 
     init(
         fetchPokemonsUseCase: FetchPokemonsPageUseCase,
-        coordinator: Coordinator?
+        coordinator: (any Coordinator)?
     )
     {
         self.fetchPokemonsUseCase = fetchPokemonsUseCase
