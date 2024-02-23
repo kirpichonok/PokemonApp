@@ -30,7 +30,7 @@ final class PokemonListViewModel: ObservableObject
 
     // MARK: - Methods
 
-    func fetchPokemonsPage(_ page: PageToPresent)
+    func fetchPokemonsPage(_ page: PageToPresent) async
     {
         let newPageNumber = switch page
         {
@@ -41,12 +41,14 @@ final class PokemonListViewModel: ObservableObject
 
         currentTask = Task
         { await fetchPokemonsPage(number: newPageNumber) }
+        try? await currentTask?.value
     }
 
     func reload() async
     {
         currentTask = Task
         { await fetchPokemonsPage(number: pageViewModel.currentPageNumber) }
+        try? await currentTask?.value
     }
 
     func didSelectRow(index: Int)

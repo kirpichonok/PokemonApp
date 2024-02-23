@@ -29,7 +29,7 @@ struct PokemonListView: View
             {
                 ErrorView(
                     error: error,
-                    reloadAction: { Task { await viewModel.reload() } }
+                    reloadAction: { Task { await viewModel.reload() }}
                 )
             }
 
@@ -46,10 +46,10 @@ struct PokemonListView: View
                 SwitchPageView(
                     pageViewModel: viewModel.pageViewModel,
                     backAction: {
-                        viewModel.fetchPokemonsPage(.previous)
+                        Task { await viewModel.fetchPokemonsPage(.previous) }
                     },
                     nextAction: {
-                        viewModel.fetchPokemonsPage(.next)
+                        Task { await viewModel.fetchPokemonsPage(.next) }
                     }
                 )
             }
