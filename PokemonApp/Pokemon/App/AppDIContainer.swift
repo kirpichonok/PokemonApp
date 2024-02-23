@@ -51,6 +51,9 @@ final class AppDIContainer
 
     private func makePokemonImageClient() -> PokemonImageClient
     {
-        DefaultPokemonImageClient(networkService: defaultNetworkService)
+        DefaultPokemonImageClient(
+            networkService: defaultNetworkService,
+            imageStorage: CoreDataPokemonImageStorage()
+        )
     }
 }

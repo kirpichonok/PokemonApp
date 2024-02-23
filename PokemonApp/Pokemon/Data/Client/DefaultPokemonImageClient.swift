@@ -1,12 +1,18 @@
+import CoreData
 import Foundation
 
 final class DefaultPokemonImageClient: PokemonImageClient
 {
     private let networkService: NetworkService
+    private let coreDataStorage: PokemonImageStorage
 
-    init(networkService: NetworkService)
+    init(
+        networkService: NetworkService,
+        imageStorage: PokemonImageStorage
+    )
     {
         self.networkService = networkService
+        self.coreDataStorage = imageStorage
     }
 
     func getImage(with path: String) async throws -> Data
