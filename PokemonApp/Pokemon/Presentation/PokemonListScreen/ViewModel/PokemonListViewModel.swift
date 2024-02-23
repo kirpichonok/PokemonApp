@@ -53,10 +53,9 @@ final class PokemonListViewModel: ObservableObject
 
     func didSelectRow(index: Int)
     {
-        if let pokemonPreview = currentPage?.list[index]
-        {
-            coordinator?.push(destination: .detailView(of: pokemonPreview))
-        }
+        guard let currentPage, !currentPage.list.isEmpty else { return }
+        let pokemonPreview = currentPage.list[index]
+        coordinator?.push(destination: .detailView(of: pokemonPreview))
     }
 }
 
