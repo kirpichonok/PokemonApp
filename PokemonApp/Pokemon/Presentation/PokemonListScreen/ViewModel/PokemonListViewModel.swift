@@ -12,7 +12,7 @@ final class PokemonListViewModel: ObservableObject
     private let fetchPokemonsUseCase: FetchPokemonsPageUseCase
     private weak var coordinator: (any Coordinator)?
     private var currentPage: PokemonPage?
-    private var currentTask: Task<Void, Error>?
+    private var currentTask: Task<Void, Never>?
     {
         willSet { currentTask?.cancel() }
     }
@@ -41,14 +41,14 @@ final class PokemonListViewModel: ObservableObject
 
         currentTask = Task
         { await fetchPokemonsPage(number: newPageNumber) }
-        try? await currentTask?.value
+        await currentTask?.value
     }
 
     func reload() async
     {
         currentTask = Task
         { await fetchPokemonsPage(number: pageViewModel.currentPageNumber) }
-        try? await currentTask?.value
+        await currentTask?.value
     }
 
     func didSelectRow(index: Int)
@@ -68,7 +68,7 @@ extension PokemonListViewModel
         {
             let newPokemonPage = try await fetchPokemonsUseCase.fetchPokemonList(page: .init(number: number))
 
-            if currentTask != nil, !currentTask!.isCancelled
+            if !Task.isCancelled
             {
                 currentPage = newPokemonPage
                 pageViewModel = .init(pokemonPage: newPokemonPage, currentPageNumber: number)
@@ -78,7 +78,7 @@ extension PokemonListViewModel
         }
         catch
         {
-            if currentTask != nil, !currentTask!.isCancelled
+            if !Task.isCancelled
             {
                 requestState = .failed(withError: error)
                 currentTask = nil

@@ -53,7 +53,7 @@ extension PokemonDetailsViewModel
         do
         {
             let pokemon = try await fetchPokemonDetailsUseCase.fetchPokemonDetails(for: pokemonPreview)
-            if currentTask != nil, !currentTask!.isCancelled
+            if !Task.isCancelled
             {
                 requestState = .success
                 self.pokemon = pokemon
@@ -71,9 +71,7 @@ extension PokemonDetailsViewModel
         {
             imageData = try? await fetchPokemonDetailsUseCase.fetchPokemonImage(with: imagePath)
 
-            if let imageData,
-               currentTask != nil,
-               !currentTask!.isCancelled
+            if let imageData, !Task.isCancelled
             {
                 self.imageData = imageData
                 requestState = .success
