@@ -42,6 +42,7 @@ struct SwitchPageView: View
     }
 }
 
-#Preview {
+#Preview
+{
     SwitchPageView(pageViewModel: PageViewModel.empty)
 }

@@ -1,6 +1,6 @@
 import Foundation
 
-final class DefaultFetchPokemonDetailsUseCase : FetchPokemonDetailsUseCase
+final class DefaultFetchPokemonDetailsUseCase: FetchPokemonDetailsUseCase
 {
     private let pokemonDetailsClient: PokemonDetailsClient
     private let pokemonImageClient: PokemonImageClient
