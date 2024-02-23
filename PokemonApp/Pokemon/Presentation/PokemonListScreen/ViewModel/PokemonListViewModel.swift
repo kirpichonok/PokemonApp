@@ -12,7 +12,7 @@ final class PokemonListViewModel: ObservableObject
     private let fetchPokemonsUseCase: FetchPokemonsPageUseCase
     private weak var coordinator: (any Coordinator)?
     private var currentPage: PokemonPage?
-    private var currentTask: Task<Void, Never>?
+    private(set) var currentTask: Task<Void, Never>?
     {
         willSet { currentTask?.cancel() }
     }
@@ -39,6 +39,7 @@ final class PokemonListViewModel: ObservableObject
         case .previous: pageViewModel.currentPageNumber - 1
         }
 
+        guard newPageNumber > 0 else { return }
         currentTask = Task
         { await fetchPokemonsPage(number: newPageNumber) }
         await currentTask?.value
