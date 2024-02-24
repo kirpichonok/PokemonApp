@@ -1,6 +1,6 @@
 name: build-app
 run-name: build app from the ${{ github.head_ref }} branch
-on: pull_request
+on: push
 jobs:
   build-pokemon-target:
     runs-on: macos-14
