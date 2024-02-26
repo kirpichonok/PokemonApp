@@ -9,7 +9,7 @@ struct PokemonListView: View
         ZStack
         {
             List(
-                viewModel.pageViewModel.listOfPokemons.indices,
+                viewModel.listOfPokemons.indices,
                 id: \.self
             )
             { index in
@@ -18,7 +18,7 @@ struct PokemonListView: View
                     viewModel.didSelectRow(index: index)
                 }
                 label: {
-                    Text(viewModel.pageViewModel.listOfPokemons[index])
+                    Text(viewModel.listOfPokemons[index])
                         .tint(.primary)
                 }
             }
@@ -44,7 +44,7 @@ struct PokemonListView: View
             ToolbarItemGroup(placement: .bottomBar)
             {
                 SwitchPageView(
-                    pageViewModel: viewModel.pageViewModel,
+                    pageViewModel: viewModel,
                     backAction: {
                         Task { await viewModel.switchTo(page: .previous) }
                     },

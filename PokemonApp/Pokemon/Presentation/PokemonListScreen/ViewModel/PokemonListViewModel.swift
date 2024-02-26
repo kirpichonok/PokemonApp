@@ -4,14 +4,35 @@ final class PokemonListViewModel: ObservableObject
 {
     // MARK: - Properties
 
-    @Published private(set) var pageViewModel = PageViewModel.empty
+    @Published private(set) var listOfPokemons = [String]()
     @Published private(set) var requestState: RequestState = .success
+    @Published private(set) var currentPageNumber = 1
+    @Published private(set) var numberOfPages = 1
+    var nextPageDisabled: Bool
+    {
+        currentPageNumber >= numberOfPages
+    }
+
+    var previousPageDisabled: Bool
+    {
+        currentPageNumber <= 1
+    }
 
     // MARK: - Private properties
 
     private let fetchPokemonsUseCase: FetchPokemonsPageUseCase
     private weak var coordinator: (any Coordinator)?
     private var currentPage: PokemonPage?
+    {
+        didSet
+        {
+            if let currentPage
+            {
+                listOfPokemons = currentPage.list.map { $0.name.capitalized }
+                calculateNumberOfPages(totalCount: currentPage.totalCount)
+            }
+        }
+    }
 
     @MainActor
     private(set) var currentTask: [Int: Task<Void, Never>] = [:]
@@ -34,8 +55,8 @@ final class PokemonListViewModel: ObservableObject
         let newPageNumber = switch page
         {
         case .initial: 1
-        case .next: pageViewModel.currentPageNumber + 1
-        case .previous: pageViewModel.currentPageNumber - 1
+        case .next: currentPageNumber + 1
+        case .previous: currentPageNumber - 1
         }
 
         await loadPage(pageNumber: newPageNumber)
@@ -43,7 +64,7 @@ final class PokemonListViewModel: ObservableObject
 
     func reload() async
     {
-        await loadPage(pageNumber: pageViewModel.currentPageNumber)
+        await loadPage(pageNumber: currentPageNumber)
     }
 
     func didSelectRow(index: Int)
@@ -76,9 +97,10 @@ extension PokemonListViewModel
                 let newPokemonPage = try await fetchPokemonsUseCase.fetchPokemonList(
                     page: .init(number: pageNumber)
                 )
+
                 if !Task.isCancelled
                 {
-                    pageViewModel = .init(pokemonPage: newPokemonPage, currentPageNumber: pageNumber)
+                    currentPageNumber = pageNumber
                     currentPage = newPokemonPage
                     requestState = .success
                 }
@@ -93,5 +115,11 @@ extension PokemonListViewModel
         }
         
         await currentTask[pageNumber]?.value
+    }
+
+    private func calculateNumberOfPages(totalCount: Int)
+    {
+        let devisionResult = (Double(totalCount) / Double(PokemonPage.pageCapacity))
+        numberOfPages = Int(ceil(devisionResult))
     }
 }

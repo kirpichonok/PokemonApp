@@ -2,7 +2,7 @@ import SwiftUI
 
 struct SwitchPageView: View
 {
-    var pageViewModel: PageViewModel
+    var pageViewModel: PokemonListViewModel
     var backAction: (() -> Void)?
     var nextAction: (() -> Void)?
     var body: some View
@@ -44,5 +44,6 @@ struct SwitchPageView: View
 
 #Preview
 {
-    SwitchPageView(pageViewModel: PageViewModel.empty)
+    let viewModel = AppDIContainer().makePokemonListViewModel(with: nil)
+    return PokemonListView(viewModel: viewModel)
 }

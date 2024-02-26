@@ -32,7 +32,7 @@ final class PokemonListViewModelTests: XCTestCase
 
         XCTAssertTrue(fetchPokemonsUseCase.fetchPokemonListCalled)
         XCTAssertEqual(fetchPokemonsUseCase.fetchPokemonListCalledCount, 2)
-        XCTAssertEqual(viewModel.pageViewModel.currentPageNumber, 1)
+        XCTAssertEqual(viewModel.currentPageNumber, 1)
     }
 
     func testFetchPokemonsPageNextIncreasesCurrentPageNumber() async
@@ -42,7 +42,7 @@ final class PokemonListViewModelTests: XCTestCase
 
         XCTAssertTrue(fetchPokemonsUseCase.fetchPokemonListCalled)
         XCTAssertEqual(viewModel.requestState, .success)
-        XCTAssertEqual(viewModel.pageViewModel.currentPageNumber, 2)
+        XCTAssertEqual(viewModel.currentPageNumber, 2)
     }
 
     func testFetchPokemonsPagePreviousOnInitialPageDoesNotChangePage() async
@@ -53,7 +53,7 @@ final class PokemonListViewModelTests: XCTestCase
         XCTAssertTrue(fetchPokemonsUseCase.fetchPokemonListCalled)
         XCTAssertEqual(fetchPokemonsUseCase.fetchPokemonListCalledCount, 1)
         XCTAssertEqual(viewModel.requestState, .success)
-        XCTAssertEqual(viewModel.pageViewModel.currentPageNumber, 1)
+        XCTAssertEqual(viewModel.currentPageNumber, 1)
     }
 
     func testFetchPokemonsPagePreviousDecreasesPageNumber() async
@@ -65,18 +65,18 @@ final class PokemonListViewModelTests: XCTestCase
         XCTAssertEqual(viewModel.requestState, .success)
         XCTAssertTrue(fetchPokemonsUseCase.fetchPokemonListCalled)
         XCTAssertEqual(fetchPokemonsUseCase.fetchPokemonListCalledCount, 3)
-        XCTAssertEqual(viewModel.pageViewModel.currentPageNumber, 1)
+        XCTAssertEqual(viewModel.currentPageNumber, 1)
     }
 
     func testReload() async
     {
-        let initialCurrentPageNumber = viewModel.pageViewModel.currentPageNumber
+        let initialCurrentPageNumber = viewModel.currentPageNumber
         await viewModel.currentTask.values.first?.value
         await viewModel.reload()
 
         XCTAssertTrue(fetchPokemonsUseCase.fetchPokemonListCalled)
         XCTAssertEqual(fetchPokemonsUseCase.fetchPokemonListCalledCount, 2)
-        XCTAssertEqual(viewModel.pageViewModel.currentPageNumber, initialCurrentPageNumber)
+        XCTAssertEqual(viewModel.currentPageNumber, initialCurrentPageNumber)
     }
 
     func testDidSelectReturnsWhenCurrentPageIsNil() async throws
