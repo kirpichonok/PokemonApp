@@ -46,10 +46,10 @@ struct PokemonListView: View
                 SwitchPageView(
                     pageViewModel: viewModel.pageViewModel,
                     backAction: {
-                        Task { await viewModel.fetchPokemonsPage(.previous) }
+                        Task { await viewModel.switchTo(page: .previous) }
                     },
                     nextAction: {
-                        Task { await viewModel.fetchPokemonsPage(.next) }
+                        Task { await viewModel.switchTo(page: .next) }
                     }
                 )
             }

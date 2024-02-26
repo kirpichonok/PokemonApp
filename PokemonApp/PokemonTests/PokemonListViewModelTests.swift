@@ -27,8 +27,8 @@ final class PokemonListViewModelTests: XCTestCase
 
     func testFetchPokemonsPageInitial() async
     {
-        await viewModel.currentTask?.value
-        await viewModel.fetchPokemonsPage(.initial)
+        await viewModel.currentTask.values.first?.value
+        await viewModel.switchTo(page: .initial)
 
         XCTAssertTrue(fetchPokemonsUseCase.fetchPokemonListCalled)
         XCTAssertEqual(fetchPokemonsUseCase.fetchPokemonListCalledCount, 2)
@@ -37,8 +37,8 @@ final class PokemonListViewModelTests: XCTestCase
 
     func testFetchPokemonsPageNextIncreasesCurrentPageNumber() async
     {
-        await viewModel.currentTask?.value
-        await viewModel.fetchPokemonsPage(.next)
+        await viewModel.currentTask.values.first?.value
+        await viewModel.switchTo(page: .next)
 
         XCTAssertTrue(fetchPokemonsUseCase.fetchPokemonListCalled)
         XCTAssertEqual(viewModel.requestState, .success)
@@ -47,8 +47,8 @@ final class PokemonListViewModelTests: XCTestCase
 
     func testFetchPokemonsPagePreviousOnInitialPageDoesNotChangePage() async
     {
-        await viewModel.currentTask?.value
-        await viewModel.fetchPokemonsPage(.previous)
+        await viewModel.currentTask.values.first?.value
+        await viewModel.switchTo(page: .previous)
 
         XCTAssertTrue(fetchPokemonsUseCase.fetchPokemonListCalled)
         XCTAssertEqual(fetchPokemonsUseCase.fetchPokemonListCalledCount, 1)
@@ -58,9 +58,9 @@ final class PokemonListViewModelTests: XCTestCase
 
     func testFetchPokemonsPagePreviousDecreasesPageNumber() async
     {
-        await viewModel.currentTask?.value
-        await viewModel.fetchPokemonsPage(.next)
-        await viewModel.fetchPokemonsPage(.previous)
+        await viewModel.currentTask.values.first?.value
+        await viewModel.switchTo(page: .next)
+        await viewModel.switchTo(page: .previous)
 
         XCTAssertEqual(viewModel.requestState, .success)
         XCTAssertTrue(fetchPokemonsUseCase.fetchPokemonListCalled)
@@ -71,7 +71,7 @@ final class PokemonListViewModelTests: XCTestCase
     func testReload() async
     {
         let initialCurrentPageNumber = viewModel.pageViewModel.currentPageNumber
-        await viewModel.currentTask?.value
+        await viewModel.currentTask.values.first?.value
         await viewModel.reload()
 
         XCTAssertTrue(fetchPokemonsUseCase.fetchPokemonListCalled)
@@ -81,7 +81,7 @@ final class PokemonListViewModelTests: XCTestCase
 
     func testDidSelectReturnsWhenCurrentPageIsNil() async throws
     {
-        await viewModel.currentTask?.value
+        await viewModel.currentTask.values.first?.value
         viewModel.didSelectRow(index: 0)
         let destination = try XCTUnwrap(coordinator.destination)
 

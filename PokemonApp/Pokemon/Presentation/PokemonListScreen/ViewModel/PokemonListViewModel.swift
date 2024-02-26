@@ -12,10 +12,9 @@ final class PokemonListViewModel: ObservableObject
     private let fetchPokemonsUseCase: FetchPokemonsPageUseCase
     private weak var coordinator: (any Coordinator)?
     private var currentPage: PokemonPage?
-    private(set) var currentTask: Task<Void, Never>?
-    {
-        willSet { currentTask?.cancel() }
-    }
+
+    @MainActor
+    private(set) var currentTask: [Int: Task<Void, Never>] = [:]
 
     init(
         fetchPokemonsUseCase: FetchPokemonsPageUseCase,
@@ -24,13 +23,13 @@ final class PokemonListViewModel: ObservableObject
     {
         self.fetchPokemonsUseCase = fetchPokemonsUseCase
         self.coordinator = coordinator
-        currentTask = Task
-        { await fetchPokemonsPage(number: pageViewModel.currentPageNumber) }
+        Task
+        { await switchTo(page: .initial) }
     }
 
     // MARK: - Methods
 
-    func fetchPokemonsPage(_ page: PageToPresent) async
+    func switchTo(page: PageToPresent) async
     {
         let newPageNumber = switch page
         {
@@ -39,17 +38,12 @@ final class PokemonListViewModel: ObservableObject
         case .previous: pageViewModel.currentPageNumber - 1
         }
 
-        guard newPageNumber > 0 else { return }
-        currentTask = Task
-        { await fetchPokemonsPage(number: newPageNumber) }
-        await currentTask?.value
+        await loadPage(pageNumber: newPageNumber)
     }
 
     func reload() async
     {
-        currentTask = Task
-        { await fetchPokemonsPage(number: pageViewModel.currentPageNumber) }
-        await currentTask?.value
+        await loadPage(pageNumber: pageViewModel.currentPageNumber)
     }
 
     func didSelectRow(index: Int)
@@ -62,28 +56,42 @@ final class PokemonListViewModel: ObservableObject
 
 extension PokemonListViewModel
 {
-    @MainActor private func fetchPokemonsPage(number: Int) async
+    @MainActor private func loadPage(pageNumber: Int) async
     {
-        requestState = .isLoading
-        do
-        {
-            let newPokemonPage = try await fetchPokemonsUseCase.fetchPokemonList(page: .init(number: number))
+        guard pageNumber > 0 else { return }
 
-            if !Task.isCancelled
-            {
-                currentPage = newPokemonPage
-                pageViewModel = .init(pokemonPage: newPokemonPage, currentPageNumber: number)
-                requestState = .success
-                currentTask = nil
-            }
-        }
-        catch
+        guard currentTask[pageNumber] == nil
+        else
         {
-            if !Task.isCancelled
+            await currentTask[pageNumber]?.value
+            return
+        }
+
+        currentTask[pageNumber] = Task
+        {
+            defer { currentTask[pageNumber] = nil }
+            requestState = .isLoading
+            do
             {
-                requestState = .failed(withError: error)
-                currentTask = nil
+                let newPokemonPage = try await fetchPokemonsUseCase.fetchPokemonList(
+                    page: .init(number: pageNumber)
+                )
+                if !Task.isCancelled
+                {
+                    pageViewModel = .init(pokemonPage: newPokemonPage, currentPageNumber: pageNumber)
+                    currentPage = newPokemonPage
+                    requestState = .success
+                }
+            }
+            catch
+            {
+                if !Task.isCancelled
+                {
+                    requestState = .failed(withError: error)
+                }
             }
         }
+        
+        await currentTask[pageNumber]?.value
     }
 }
