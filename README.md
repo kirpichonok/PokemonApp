@@ -2,7 +2,21 @@
 
 ![SDKs for iOS](https://img.shields.io/badge/SDKs%20for%20iOS-16%2B-orange)
 
-The app serves to download and preview information about pokemons.
+The app serves to display list of pokemons and view detailed information about them. Exploited features:
+
+- list pagination.
+- dark and light modes are supported.
+- offline mode due to request caching.
+
+<img src="assets/pokemon-screen-record.gif" height="600">
+
+## Stack of technologies
+
+- SwiftUI
+- Clean + Coordinator
+- Modern concurrency
+- Testing using XCTest
+- Moya (will be removed)
 
 ## Dev environment
 
