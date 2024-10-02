@@ -63,6 +63,8 @@
 		19A2B6872B81F6FF00BD23E7 /* DefaultNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A2B6862B81F6FE00BD23E7 /* DefaultNetworkService.swift */; };
 		19A2B6892B81F78200BD23E7 /* ApiEndpoint+TargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A2B6882B81F78200BD23E7 /* ApiEndpoint+TargetType.swift */; };
 		19A2B68B2B81F8D800BD23E7 /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A2B68A2B81F8D800BD23E7 /* AppConfiguration.swift */; };
+		19A58DA92CADE2E6002019C4 /* LaunchScreenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A58DA72CADE2E6002019C4 /* LaunchScreenManager.swift */; };
+		19A58DAA2CADE2E6002019C4 /* LaunchScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A58DA82CADE2E6002019C4 /* LaunchScreenView.swift */; };
 		19B65FFC2B80F439003853C4 /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B65FFB2B80F439003853C4 /* Page.swift */; };
 		19B65FFE2B80F50B003853C4 /* PokemonClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B65FFD2B80F50B003853C4 /* PokemonClient.swift */; };
 		19B660012B80F6EA003853C4 /* FetchPokemonsPageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B660002B80F6EA003853C4 /* FetchPokemonsPageUseCase.swift */; };
@@ -137,6 +139,8 @@
 		19A2B6862B81F6FE00BD23E7 /* DefaultNetworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultNetworkService.swift; sourceTree = "<group>"; };
 		19A2B6882B81F78200BD23E7 /* ApiEndpoint+TargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ApiEndpoint+TargetType.swift"; sourceTree = "<group>"; };
 		19A2B68A2B81F8D800BD23E7 /* AppConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
+		19A58DA72CADE2E6002019C4 /* LaunchScreenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenManager.swift; sourceTree = "<group>"; };
+		19A58DA82CADE2E6002019C4 /* LaunchScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenView.swift; sourceTree = "<group>"; };
 		19B65FFB2B80F439003853C4 /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
 		19B65FFD2B80F50B003853C4 /* PokemonClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonClient.swift; sourceTree = "<group>"; };
 		19B660002B80F6EA003853C4 /* FetchPokemonsPageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchPokemonsPageUseCase.swift; sourceTree = "<group>"; };
@@ -295,6 +299,7 @@
 		192BF7EA2B80CA6B0023C648 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				19A58DAB2CADE2EF002019C4 /* LaunchScreen */,
 				194893442B862C86009FE48A /* PokemonDetailsScreen */,
 				192BF7EB2B80CA860023C648 /* PokemonListScreen */,
 				19E505272B84B67800C0407B /* Common */,
@@ -482,6 +487,15 @@
 				1948933A2B862579009FE48A /* Extension */,
 			);
 			path = Client;
+			sourceTree = "<group>";
+		};
+		19A58DAB2CADE2EF002019C4 /* LaunchScreen */ = {
+			isa = PBXGroup;
+			children = (
+				19A58DA72CADE2E6002019C4 /* LaunchScreenManager.swift */,
+				19A58DA82CADE2E6002019C4 /* LaunchScreenView.swift */,
+			);
+			path = LaunchScreen;
 			sourceTree = "<group>";
 		};
 		19B65FFF2B80F696003853C4 /* Interface */ = {
@@ -677,6 +691,8 @@
 				19B660012B80F6EA003853C4 /* FetchPokemonsPageUseCase.swift in Sources */,
 				19E5052D2B84E1EE00C0407B /* Error+isConnectionError.swift in Sources */,
 				19B65FFC2B80F439003853C4 /* Page.swift in Sources */,
+				19A58DA92CADE2E6002019C4 /* LaunchScreenManager.swift in Sources */,
+				19A58DAA2CADE2E6002019C4 /* LaunchScreenView.swift in Sources */,
 				1903423D2B80DA53004EFDFB /* PokemonPageDataModel.swift in Sources */,
 				194A03FE2B866D5A003DB9BC /* PokemonDescriptionViewModel.swift in Sources */,
 				1991F2A52B87516500447A0A /* DefaultPokemonImageClient.swift in Sources */,

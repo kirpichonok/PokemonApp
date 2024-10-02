@@ -9,6 +9,7 @@ struct PokemonApp: App
         {
             CoordinatorRootView()
                 .environmentObject(AppCoordinator())
+                .environmentObject(LaunchScreenManager())
         }
     }
 }
