@@ -1,7 +1,6 @@
 import Foundation
 
-final class AppDIContainer
-{
+final class AppDIContainer {
     private lazy var defaultNetworkService = DefaultNetworkService()
 
     // MARK: - View Models
@@ -9,48 +8,41 @@ final class AppDIContainer
     func makePokemonDetailsViewModel(
         with pokemonPreview: PokemonPreview,
         coordinator: (any Coordinator)?
-    ) -> PokemonDetailsViewModel
-    {
+    ) -> PokemonDetailsViewModel {
         .init(pokemonPreview: pokemonPreview,
               fetchPokemonDetailsUseCase: makeFetchPokemonDetailsUseCase(),
               coordinator: coordinator)
     }
 
-    func makePokemonListViewModel(with coordinator: (any Coordinator)?) -> PokemonListViewModel
-    {
+    func makePokemonListViewModel(with coordinator: (any Coordinator)?) -> PokemonListViewModel {
         .init(fetchPokemonsUseCase: makeFetchPokemonsPageUseCase(),
               coordinator: coordinator)
     }
 
     // MARK: - Use Cases
 
-    private func makeFetchPokemonDetailsUseCase() -> FetchPokemonDetailsUseCase
-    {
+    private func makeFetchPokemonDetailsUseCase() -> FetchPokemonDetailsUseCase {
         DefaultFetchPokemonDetailsUseCase(
             pokemonDetailsClient: makePokemonDetailsClient(),
             pokemonImageClient: makePokemonImageClient()
         )
     }
 
-    private func makeFetchPokemonsPageUseCase() -> FetchPokemonsPageUseCase
-    {
+    private func makeFetchPokemonsPageUseCase() -> FetchPokemonsPageUseCase {
         DefaultFetchPokemonsPageUseCase(pokemonClient: makePokemonClient())
     }
 
     // MARK: - Client
 
-    private func makePokemonDetailsClient() -> PokemonDetailsClient
-    {
+    private func makePokemonDetailsClient() -> PokemonDetailsClient {
         DefaultPokemonDetailsClient(networkService: defaultNetworkService)
     }
 
-    private func makePokemonClient() -> PokemonClient
-    {
+    private func makePokemonClient() -> PokemonClient {
         DefaultPokemonClient(networkService: defaultNetworkService)
     }
 
-    private func makePokemonImageClient() -> PokemonImageClient
-    {
+    private func makePokemonImageClient() -> PokemonImageClient {
         DefaultPokemonImageClient(
             networkService: defaultNetworkService,
             imageStorage: CoreDataPokemonImageStorage()

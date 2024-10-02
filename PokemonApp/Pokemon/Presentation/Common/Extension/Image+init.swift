@@ -1,15 +1,10 @@
 import SwiftUI
 
-extension Image
-{
-    init(data: Data?)
-    {
-        if let data, let uiImage = UIImage(data: data)
-        {
+extension Image {
+    init(data: Data?) {
+        if let data, let uiImage = UIImage(data: data) {
             self.init(uiImage: uiImage)
-        }
-        else
-        {
+        } else {
             self.init(systemName: .SystemImageName.photo)
         }
     }

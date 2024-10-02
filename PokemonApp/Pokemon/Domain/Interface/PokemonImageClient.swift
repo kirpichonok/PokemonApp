@@ -1,6 +1,5 @@
 import Foundation
 
-protocol PokemonImageClient
-{
+protocol PokemonImageClient {
     func getImage(with path: String) async throws -> Data
 }

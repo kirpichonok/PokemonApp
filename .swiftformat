@@ -1,0 +1,92 @@
+# format options
+--ranges no-space
+
+--disable all
+
+--enable \
+   andOperator, \
+   anyObjectProtocol, \
+   applicationMain, \
+   assertionFailures, \
+   blankLinesAroundMark, \
+   blankLinesAtEndOfScope, \
+   blankLinesBetweenScopes, \
+   braces, \
+   conditionalAssignment, \
+   consecutiveBlankLines, \
+   consecutiveSpaces, \
+   duplicateImports, \
+   elseOnSameLine, \
+   emptyBraces, \
+   enumNamespaces, \
+   extensionAccessControl, \
+   fileHeader, \
+   genericExtensions, \
+   headerFileName, \
+   hoistAwait, \
+   hoistPatternLet, \
+   hoistTry, \
+   indent, \
+   initCoderUnavailable, \
+   leadingDelimiters, \
+   linebreakAtEndOfFile, \
+   linebreaks, \
+   modifierOrder, \
+   numberFormatting, \
+   opaqueGenericParameters, \
+   preferKeyPath, \
+   redundantBackticks, \
+   redundantBreak, \
+   redundantClosure, \
+   redundantExtensionACL, \
+   redundantFileprivate, \
+   redundantGet, \
+   redundantInit, \
+   redundantInternal, \
+   redundantLet, \
+   redundantLetError, \
+   redundantNilInit, \
+   redundantObjc, \
+   redundantOptionalBinding, \
+   redundantParens, \
+   redundantPattern, \
+   redundantRawValues, \
+   redundantReturn, \
+   redundantSelf, \
+   redundantStaticSelf, \
+   redundantType, \
+   redundantVoidReturnType, \
+   semicolons, \
+   sortDeclarations, \
+   sortImports, \
+   sortTypealiases, \
+   spaceAroundBraces, \
+   spaceAroundBrackets, \
+   spaceAroundComments, \
+   spaceAroundGenerics, \
+   spaceAroundOperators, \
+   spaceAroundParens, \
+   spaceInsideBraces, \
+   spaceInsideBrackets, \
+   spaceInsideComments, \
+   spaceInsideGenerics, \
+   spaceInsideParens, \
+   strongOutlets, \
+   strongifiedSelf, \
+   todos, \
+   trailingClosures, \
+   trailingCommas, \
+   trailingSpace, \
+   typeSugar, \
+   unusedArguments, \
+   void, \
+   wrap, \
+   wrapArguments, \
+   wrapAttributes, \
+   wrapEnumCases, \
+   wrapSingleLineComments, \
+   yodaConditions
+
+
+# min swift format version
+--minversion 0.53.9

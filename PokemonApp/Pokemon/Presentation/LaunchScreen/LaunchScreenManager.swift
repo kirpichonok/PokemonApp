@@ -6,7 +6,7 @@ final class LaunchScreenManager: ObservableObject {
     let timer = Timer
         .publish(every: 0.7, on: .main, in: .common)
         .autoconnect()
-    
+
     @MainActor func dismiss() {
         state = .secondPhase
         Task {

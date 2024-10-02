@@ -1,10 +1,8 @@
 import Alamofire
 import Foundation
 
-extension AFError
-{
-    func convertToNetworkError() -> NetworkError
-    {
+extension AFError {
+    func convertToNetworkError() -> NetworkError {
         let connectionFailureStatusCodes = [
             URLError.notConnectedToInternet,
             URLError.networkConnectionLost,
@@ -12,8 +10,7 @@ extension AFError
         ]
 
         let networkError: NetworkError
-        switch self
-        {
+        switch self {
         case .invalidURL:
             networkError = .invalidUrl
 

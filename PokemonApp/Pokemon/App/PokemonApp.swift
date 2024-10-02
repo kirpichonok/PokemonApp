@@ -1,12 +1,9 @@
 import SwiftUI
 
 @main
-struct PokemonApp: App
-{
-    var body: some Scene
-    {
-        WindowGroup
-        {
+struct PokemonApp: App {
+    var body: some Scene {
+        WindowGroup {
             CoordinatorRootView()
                 .environmentObject(AppCoordinator())
                 .environmentObject(LaunchScreenManager())

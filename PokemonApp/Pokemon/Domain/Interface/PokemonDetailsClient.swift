@@ -1,6 +1,5 @@
 import Foundation
 
-protocol PokemonDetailsClient
-{
+protocol PokemonDetailsClient {
     func getPokemonDetails(for pokemon: PokemonPreview) async throws -> Pokemon
 }

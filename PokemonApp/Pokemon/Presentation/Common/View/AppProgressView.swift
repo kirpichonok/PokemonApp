@@ -1,9 +1,7 @@
 import SwiftUI
 
-struct AppProgressView: View
-{
-    var body: some View
-    {
+struct AppProgressView: View {
+    var body: some View {
         ProgressView()
             .progressViewStyle(.circular)
             .scaleEffect(2)
@@ -11,7 +9,6 @@ struct AppProgressView: View
     }
 }
 
-#Preview
-{
+#Preview {
     AppProgressView()
 }

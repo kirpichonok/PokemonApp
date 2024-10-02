@@ -1,17 +1,12 @@
 import SwiftUI
 
-struct PokemonDetailsView: View
-{
+struct PokemonDetailsView: View {
     @StateObject var viewModel: PokemonDetailsViewModel
 
-    var body: some View
-    {
-        ZStack
-        {
-            VStack
-            {
-                VStack
-                {
+    var body: some View {
+        ZStack {
+            VStack {
+                VStack {
                     Text(viewModel.pokemonDescription.name)
                         .font(.system(.largeTitle, design: .rounded, weight: .semibold))
 
@@ -22,26 +17,21 @@ struct PokemonDetailsView: View
                         .shadow(color: .primary, radius: 30)
                 }
 
-                List
-                {
-                    Section
-                    {
+                List {
+                    Section {
                         Text("Type: " + viewModel.pokemonDescription.type)
                         Text("Weight: " + viewModel.pokemonDescription.weight)
                         Text("Height: " + viewModel.pokemonDescription.height)
                     }
-                    header:
-                    {
+                    header: {
                         Label(
-                            title:
-                            {
+                            title: {
                                 Text("Information")
                                     .font(.body)
                                     .foregroundStyle(.primary)
 
                             },
-                            icon:
-                            {
+                            icon: {
                                 Image(systemName: .SystemImageName.infoSquare)
                                     .font(.body)
                             }
@@ -52,26 +42,21 @@ struct PokemonDetailsView: View
                 .disabled(true)
             }
 
-            if case let .failed(withError: error) = viewModel.requestState
-            {
+            if case let .failed(withError: error) = viewModel.requestState {
                 ErrorView(
                     error: error,
                     reloadAction: viewModel.didBackButtonPressed
                 )
             }
 
-            else if case .isLoading = viewModel.requestState
-            {
+            else if case .isLoading = viewModel.requestState {
                 AppProgressView()
             }
         }
         .navigationBarBackButtonHidden()
-        .toolbar
-        {
-            ToolbarItem(placement: .navigationBarLeading)
-            {
-                Button
-                {
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
                     viewModel.didBackButtonPressed()
 
                 } label: {
@@ -84,10 +69,8 @@ struct PokemonDetailsView: View
     }
 }
 
-#Preview
-{
-    NavigationStack
-    {
+#Preview {
+    NavigationStack {
         let viewModel = AppDIContainer().makePokemonDetailsViewModel(
             with: PokemonPreview(
                 name: "Pika",

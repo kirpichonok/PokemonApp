@@ -1,20 +1,15 @@
 import SwiftUI
 
-struct PokemonListView: View
-{
+struct PokemonListView: View {
     @StateObject var viewModel: PokemonListViewModel
 
-    var body: some View
-    {
-        ZStack
-        {
+    var body: some View {
+        ZStack {
             List(
                 viewModel.listOfPokemons.indices,
                 id: \.self
-            )
-            { index in
-                Button
-                {
+            ) { index in
+                Button {
                     viewModel.didSelectRow(index: index)
                 }
                 label: {
@@ -25,24 +20,20 @@ struct PokemonListView: View
             .disabled(viewModel.requestState != .success)
             .blur(radius: viewModel.requestState == .success ? 0 : 4)
 
-            if case let .failed(withError: error) = viewModel.requestState
-            {
+            if case let .failed(withError: error) = viewModel.requestState {
                 ErrorView(
                     error: error,
                     reloadAction: { Task { await viewModel.reload() }}
                 )
             }
 
-            else if case .isLoading = viewModel.requestState
-            {
+            else if case .isLoading = viewModel.requestState {
                 AppProgressView()
             }
         }
         .navigationTitle("Pokemons")
-        .toolbar
-        {
-            ToolbarItemGroup(placement: .bottomBar)
-            {
+        .toolbar {
+            ToolbarItemGroup(placement: .bottomBar) {
                 SwitchPageView(
                     pageViewModel: viewModel,
                     backAction: {
@@ -57,10 +48,8 @@ struct PokemonListView: View
     }
 }
 
-#Preview
-{
-    NavigationStack
-    {
+#Preview {
+    NavigationStack {
         let viewModel = AppDIContainer().makePokemonListViewModel(with: nil)
         PokemonListView(viewModel: viewModel)
     }

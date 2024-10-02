@@ -2,45 +2,35 @@ import Alamofire
 import Foundation
 import Moya
 
-final class DefaultNetworkService: NetworkService
-{
+final class DefaultNetworkService: NetworkService {
     // MARK: - Private properties
 
     private let moyaProvider = MoyaProvider<ApiEndpoint>()
 
     // MARK: - Methods
 
-    func request<T>(to endpoint: ApiEndpoint) async throws -> T where T: Decodable
-    {
-        do
-        {
+    func request<T>(to endpoint: ApiEndpoint) async throws -> T where T: Decodable {
+        do {
             let response = try await moyaProvider.request(endpoint)
                 .filterSuccessfulStatusCodes()
 
             if T.self is Data.Type,
-               let data = response.data as? T
-            {
+               let data = response.data as? T {
                 return data
-            }
-            else
-            {
+            } else {
                 return try response.map(T.self, using: endpoint.responseDecoder)
             }
-        }
-        catch
-        {
+        } catch {
             throw mapToNetworkError(error)
         }
     }
 
     // MARK: - Private methods
 
-    private func mapToNetworkError(_ error: Error) -> NetworkError
-    {
+    private func mapToNetworkError(_ error: Error) -> NetworkError {
         guard let moyaError = error as? MoyaError else { return .unknown(error) }
 
-        switch moyaError
-        {
+        switch moyaError {
         case let .objectMapping(error, _):
             return .parsingFailed(error)
 
@@ -58,14 +48,10 @@ final class DefaultNetworkService: NetworkService
         }
     }
 
-    private func mapUnderlyingError(_ error: Error) -> NetworkError
-    {
-        if let error = error as? AFError
-        {
+    private func mapUnderlyingError(_ error: Error) -> NetworkError {
+        if let error = error as? AFError {
             return error.convertToNetworkError()
-        }
-        else
-        {
+        } else {
             return error.convertToNetworkError()
         }
     }

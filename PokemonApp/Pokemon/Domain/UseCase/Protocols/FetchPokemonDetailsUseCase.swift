@@ -1,7 +1,6 @@
 import Foundation
 
-protocol FetchPokemonDetailsUseCase
-{
+protocol FetchPokemonDetailsUseCase {
     func fetchPokemonDetails(for pokemon: PokemonPreview) async throws -> Pokemon
     func fetchPokemonImage(with path: String) async throws -> Data
 }

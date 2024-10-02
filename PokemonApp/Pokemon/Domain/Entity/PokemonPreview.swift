@@ -1,7 +1,6 @@
 import Foundation
 
-struct PokemonPreview: Hashable
-{
+struct PokemonPreview: Hashable {
     let name: String
     let pathToDetails: String
 }

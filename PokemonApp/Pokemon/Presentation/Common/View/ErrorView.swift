@@ -1,15 +1,12 @@
 import SwiftUI
 
-struct ErrorView: View
-{
+struct ErrorView: View {
     // MARK: - Properties
 
     let error: Error
     var reloadAction: (() -> Void)?
-    var body: some View
-    {
-        VStack(spacing: 20)
-        {
+    var body: some View {
+        VStack(spacing: 20) {
             Image(systemName: error.isConnectionError ?
                 .SystemImageName.wifiExclamationMark :
                 .SystemImageName.xMarkCircle
@@ -28,18 +25,14 @@ struct ErrorView: View
             Text(error.localizedDescription)
                 .multilineTextAlignment(.center)
 
-            Button
-            {
+            Button {
                 reloadAction?()
             }
-            label:
-            {
-                Label
-                {
+            label: {
+                Label {
                     Text(reloadButtonTitle)
                 }
-                icon:
-                {
+                icon: {
                     Image(systemName: .SystemImageName.arrowClockwiseCircle)
                         .resizable()
                         .frame(width: 30, height: 30)
@@ -60,10 +53,8 @@ struct ErrorView: View
     private let reloadButtonTitle = "Reload"
 }
 
-#Preview
-{
-    VStack
-    {
+#Preview {
+    VStack {
         ErrorView(error: NetworkError.connectionFailed)
         ErrorView(error: NetworkError.invalidUrl)
     }

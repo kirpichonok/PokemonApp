@@ -1,18 +1,14 @@
 import Foundation
 
-enum ClientError
-{
+enum ClientError {
     case invalidUrl
     case networkError(NetworkError)
     case unknown(Error)
 }
 
-extension ClientError: LocalizedError
-{
-    var errorDescription: String?
-    {
-        switch self
-        {
+extension ClientError: LocalizedError {
+    var errorDescription: String? {
+        switch self {
         case .invalidUrl:
             return "Invalid URL address is received."
         case let .networkError(networkError):

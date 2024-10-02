@@ -1,6 +1,5 @@
 import Foundation
 
-enum DummyData
-{
+enum DummyData {
     static let testPokemonPreview = PokemonPreview(name: "TestPokemon", pathToDetails: "test")
 }

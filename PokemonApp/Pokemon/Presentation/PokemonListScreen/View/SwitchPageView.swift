@@ -1,20 +1,15 @@
 import SwiftUI
 
-struct SwitchPageView: View
-{
+struct SwitchPageView: View {
     var pageViewModel: PokemonListViewModel
     var backAction: (() -> Void)?
     var nextAction: (() -> Void)?
-    var body: some View
-    {
-        HStack(spacing: 40)
-        {
-            Button
-            {
+    var body: some View {
+        HStack(spacing: 40) {
+            Button {
                 backAction?()
             }
-            label:
-            {
+            label: {
                 Image(systemName: .SystemImageName.chevronBackwardSquare)
                     .font(.title2)
             }
@@ -26,12 +21,10 @@ struct SwitchPageView: View
                 " / " + pageViewModel.numberOfPages.formatted())
                 .font(.title2)
 
-            Button
-            {
+            Button {
                 nextAction?()
             }
-            label:
-            {
+            label: {
                 Image(systemName: .SystemImageName.chevronForwardSquare)
             }
             .font(.title2)
@@ -42,8 +35,7 @@ struct SwitchPageView: View
     }
 }
 
-#Preview
-{
+#Preview {
     let viewModel = AppDIContainer().makePokemonListViewModel(with: nil)
     return PokemonListView(viewModel: viewModel)
 }

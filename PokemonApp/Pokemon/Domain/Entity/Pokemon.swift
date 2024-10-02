@@ -1,7 +1,6 @@
 import Foundation
 
-struct Pokemon: Hashable
-{
+struct Pokemon: Hashable {
     let name: String
     let type: String
     let weight: Int

@@ -1,14 +1,12 @@
 import Foundation
 
-struct PokemonDescriptionViewModel
-{
+struct PokemonDescriptionViewModel {
     let name: String
     let type: String
     let weight: String
     let height: String
 
-    init()
-    {
+    init() {
         name = ""
         type = ""
         weight = ""
@@ -16,10 +14,8 @@ struct PokemonDescriptionViewModel
     }
 }
 
-extension PokemonDescriptionViewModel
-{
-    init(pokemon: Pokemon)
-    {
+extension PokemonDescriptionViewModel {
+    init(pokemon: Pokemon) {
         name = pokemon.name.capitalized
         type = pokemon.type
         weight = pokemon.weight.formatted() + " g"

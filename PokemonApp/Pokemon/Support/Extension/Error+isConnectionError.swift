@@ -1,14 +1,9 @@
-extension Error
-{
-    var isConnectionError: Bool
-    {
+extension Error {
+    var isConnectionError: Bool {
         if let error = self as? NetworkError,
-           case .connectionFailed = error
-        {
+           case .connectionFailed = error {
             return true
-        }
-        else
-        {
+        } else {
             return false
         }
     }

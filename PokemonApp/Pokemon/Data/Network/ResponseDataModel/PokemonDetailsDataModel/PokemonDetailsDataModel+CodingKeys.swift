@@ -1,9 +1,7 @@
 import Foundation
 
-extension PokemonDetailsDataModel
-{
-    init(from decoder: Decoder) throws
-    {
+extension PokemonDetailsDataModel {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: AnyCodingKey.self)
 //        id = try container.decode(
 //            Int.self,
@@ -42,46 +40,37 @@ extension PokemonDetailsDataModel
     }
 }
 
-extension PokemonDetailsDataModel: Decodable
-{
-    struct AnyCodingKey: CodingKey
-    {
+extension PokemonDetailsDataModel: Decodable {
+    struct AnyCodingKey: CodingKey {
         var stringValue: String
         var intValue: Int?
-        init(_ codingKey: CodingKey)
-        {
+        init(_ codingKey: CodingKey) {
             stringValue = codingKey.stringValue
             intValue = codingKey.intValue
         }
 
-        init(stringValue: String)
-        {
+        init(stringValue: String) {
             self.stringValue = stringValue
             intValue = nil
         }
 
-        init(intValue: Int)
-        {
+        init(intValue: Int) {
             stringValue = String(intValue)
             self.intValue = intValue
         }
 
-        enum TypesCodingKeys: String, CodingKey
-        {
+        enum TypesCodingKeys: String, CodingKey {
             case type
 
-            enum TypeNameKeys: String, CodingKey
-            {
+            enum TypeNameKeys: String, CodingKey {
                 case name
             }
         }
     }
 }
 
-private extension String
-{
-    enum KeyName
-    {
+private extension String {
+    enum KeyName {
 //        static let id = "id"
         static let name = "name"
         static let heightKey = "height"

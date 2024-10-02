@@ -1,7 +1,6 @@
 import Foundation
 
-enum NetworkError
-{
+enum NetworkError {
     /// Request execution error.
     case requestFailed(statusCode: Int)
     /// Failed to create a valid URL.
@@ -16,12 +15,9 @@ enum NetworkError
     case unknown(Error)
 }
 
-extension NetworkError: LocalizedError
-{
-    var errorDescription: String?
-    {
-        switch self
-        {
+extension NetworkError: LocalizedError {
+    var errorDescription: String? {
+        switch self {
         case let .requestFailed(statusCode: code):
             return "Execution error with code: \(code). Try again later or contact developer."
         case .invalidUrl:

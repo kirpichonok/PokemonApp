@@ -1,12 +1,9 @@
 import Foundation
 import Moya
 
-extension ApiEndpoint: TargetType
-{
-    var baseURL: URL
-    {
-        switch self
-        {
+extension ApiEndpoint: TargetType {
+    var baseURL: URL {
+        switch self {
         case .page:
             guard let url = URL(string: AppConfiguration.baseURL) else { fatalError("Invalid base URL.") }
             return url
@@ -17,28 +14,22 @@ extension ApiEndpoint: TargetType
         }
     }
 
-    var path: String
-    {
-        switch self
-        {
+    var path: String {
+        switch self {
         case .page, .pokemonDetails, .image:
             return ""
         }
     }
 
-    var method: Moya.Method
-    {
-        switch self
-        {
+    var method: Moya.Method {
+        switch self {
         case .page, .pokemonDetails, .image:
             return .get
         }
     }
 
-    var task: Moya.Task
-    {
-        switch self
-        {
+    var task: Moya.Task {
+        switch self {
         case let .page(number: pageNumber):
             let offsetIndex = pageNumber - 1
             return .requestParameters(
@@ -51,8 +42,7 @@ extension ApiEndpoint: TargetType
         }
     }
 
-    var headers: [String: String]?
-    {
+    var headers: [String: String]? {
         nil
     }
 }
