@@ -1,8 +1,12 @@
 import SwiftUI
 
 struct PokemonListView: View {
-    @StateObject var viewModel: PokemonListViewModel
+    @StateObject var viewModel: ViewModel<DefaultFetchPokemonsPageUseCase, AppCoordinator>
+}
 
+// MARK: - Body
+
+extension PokemonListView {
     var body: some View {
         ZStack {
             List(
@@ -13,44 +17,72 @@ struct PokemonListView: View {
                     viewModel.didSelectRow(index: index)
                 }
                 label: {
-                    Text(viewModel.listOfPokemons[index])
+                    let name = viewModel.listOfPokemons[index]
+                    Text(name)
                         .tint(.primary)
                 }
             }
             .disabled(viewModel.requestState != .success)
             .blur(radius: viewModel.requestState == .success ? 0 : 4)
 
-            if case let .failed(withError: error) = viewModel.requestState {
+            switch viewModel.requestState {
+            case let .failed(withError: error):
                 ErrorView(
                     error: error,
                     reloadAction: { Task { await viewModel.reload() }}
                 )
-            }
 
-            else if case .isLoading = viewModel.requestState {
-                AppProgressView()
+            case .isLoading: AppProgressView()
+            case .success: EmptyView()
             }
         }
         .navigationTitle("Pokemons")
         .toolbar {
             ToolbarItemGroup(placement: .bottomBar) {
-                SwitchPageView(
-                    pageViewModel: viewModel,
-                    backAction: {
-                        Task { await viewModel.switchTo(page: .previous) }
-                    },
-                    nextAction: {
-                        Task { await viewModel.switchTo(page: .next) }
-                    }
-                )
+                toolbarItems
             }
+        }
+    }
+}
+
+// MARK: - Subviews
+
+private extension PokemonListView {
+    @ViewBuilder
+    var toolbarItems: some View {
+        HStack(spacing: 40) {
+            Button {
+                Task { await viewModel.switchTo(page: .previous) }
+            }
+            label: {
+                Image(systemName: .SystemImageName.chevronBackwardSquare)
+                    .font(.title2)
+            }
+            .buttonStyle(.bordered)
+            .foregroundStyle(viewModel.previousPageDisabled ? .gray : .accentColor)
+            .disabled(viewModel.previousPageDisabled)
+
+            Text(viewModel.currentPageNumber.formatted() +
+                " / " + viewModel.numberOfPages.formatted())
+                .font(.title2)
+
+            Button {
+                Task { await viewModel.switchTo(page: .next) }
+            }
+            label: {
+                Image(systemName: .SystemImageName.chevronForwardSquare)
+            }
+            .font(.title2)
+            .buttonStyle(.bordered)
+            .foregroundStyle(viewModel.nextPageDisabled ? .gray : .accentColor)
+            .disabled(viewModel.nextPageDisabled)
         }
     }
 }
 
 #Preview {
     NavigationStack {
-        let viewModel = AppDIContainer().makePokemonListViewModel(with: nil)
+        let viewModel = AppDIContainer().makePokemonListViewModel(with: AppCoordinator())
         PokemonListView(viewModel: viewModel)
     }
 }

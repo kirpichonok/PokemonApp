@@ -1,6 +1,6 @@
 import Foundation
 
-extension PokemonListViewModel {
+extension PokemonListView.ViewModel {
     enum PageToPresent {
         case initial
         case next

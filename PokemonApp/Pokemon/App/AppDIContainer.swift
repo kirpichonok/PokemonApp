@@ -14,7 +14,7 @@ final class AppDIContainer {
               coordinator: coordinator)
     }
 
-    func makePokemonListViewModel(with coordinator: (any Coordinator)?) -> PokemonListViewModel {
+    func makePokemonListViewModel<C: Coordinator>(with coordinator: C) -> PokemonListView.ViewModel<DefaultFetchPokemonsPageUseCase,C> {
         .init(fetchPokemonsUseCase: makeFetchPokemonsPageUseCase(),
               coordinator: coordinator)
     }
@@ -28,7 +28,7 @@ final class AppDIContainer {
         )
     }
 
-    private func makeFetchPokemonsPageUseCase() -> FetchPokemonsPageUseCase {
+    private func makeFetchPokemonsPageUseCase() -> DefaultFetchPokemonsPageUseCase {
         DefaultFetchPokemonsPageUseCase(pokemonClient: makePokemonClient())
     }
 

@@ -1,6 +1,8 @@
+@testable import Pokemon
 import Foundation
 
 final class FetchPokemonsPageUseCaseMock: FetchPokemonsPageUseCase {
+
     var fetchPokemonListCalled = false
     var fetchPokemonListCalledCount = 0
 
