@@ -1,13 +1,14 @@
 @testable import Pokemon
 import XCTest
 
+@MainActor
 final class PokemonListViewModelTests: XCTestCase {
    var viewModel: PokemonListView.ViewModel<FetchPokemonsPageUseCaseMock, CoordinatorMock>!
    var fetchPokemonsUseCase: FetchPokemonsPageUseCaseMock!
    var coordinator: CoordinatorMock!
 
-   override func setUp() {
-       super.setUp()
+    override func setUp() async throws {
+        try await super.setUp()
        fetchPokemonsUseCase = FetchPokemonsPageUseCaseMock()
        coordinator = CoordinatorMock()
        viewModel = PokemonListView.ViewModel(

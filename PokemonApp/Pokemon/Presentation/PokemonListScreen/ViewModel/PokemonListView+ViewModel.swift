@@ -1,6 +1,7 @@
 import Foundation
 
 extension PokemonListView {
+    @MainActor
     final class ViewModel<F: FetchPokemonsPageUseCase, C: Coordinator>: ObservableObject {
         @Published private(set) var listOfPokemons = [String]()
         @Published private(set) var requestState: RequestState = .success
