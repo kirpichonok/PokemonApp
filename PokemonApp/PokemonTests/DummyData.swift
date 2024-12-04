@@ -1,3 +1,4 @@
+@testable import Pokemon
 import Foundation
 
 enum DummyData {
