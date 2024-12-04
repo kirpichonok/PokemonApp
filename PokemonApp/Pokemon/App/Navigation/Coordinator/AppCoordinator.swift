@@ -22,8 +22,10 @@ final class AppCoordinator: ObservableObject, Coordinator {
     @ViewBuilder func build(_ destination: DestinationScreen) -> some View {
         switch destination {
         case .pokemonList:
-            let viewModel = appDiContainer.makePokemonListViewModel(with: self)
-            PokemonListView(viewModel: viewModel)
+            PokemonListView(
+                useCase:  appDiContainer.makeFetchPokemonsPageUseCase,
+                coordinator: self
+            )
 
         case let .detailView(of: pokemonPreview):
             let viewModel = appDiContainer.makePokemonDetailsViewModel(

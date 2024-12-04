@@ -1,6 +1,18 @@
 import SwiftUI
 
 struct PokemonListView: View {
+    init(
+        useCase:  @escaping () -> DefaultFetchPokemonsPageUseCase,
+        coordinator: @autoclosure @escaping () -> AppCoordinator
+    ) {
+        _viewModel = .init(
+            wrappedValue: .init(
+                fetchPokemonsUseCase: useCase(),
+                coordinator: coordinator()
+            )
+        )
+    }
+
     @StateObject var viewModel: ViewModel<DefaultFetchPokemonsPageUseCase, AppCoordinator>
 }
 
@@ -82,7 +94,9 @@ private extension PokemonListView {
 
 #Preview {
     NavigationStack {
-        let viewModel = AppDIContainer().makePokemonListViewModel(with: AppCoordinator())
-        PokemonListView(viewModel: viewModel)
+        PokemonListView(
+            useCase: AppDIContainer().makeFetchPokemonsPageUseCase,
+            coordinator: AppCoordinator()
+        )
     }
 }

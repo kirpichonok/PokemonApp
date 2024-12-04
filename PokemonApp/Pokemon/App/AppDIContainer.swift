@@ -14,9 +14,8 @@ final class AppDIContainer {
               coordinator: coordinator)
     }
 
-    func makePokemonListViewModel<C: Coordinator>(with coordinator: C) -> PokemonListView.ViewModel<DefaultFetchPokemonsPageUseCase,C> {
-        .init(fetchPokemonsUseCase: makeFetchPokemonsPageUseCase(),
-              coordinator: coordinator)
+    func makeFetchPokemonsPageUseCase() -> DefaultFetchPokemonsPageUseCase {
+        DefaultFetchPokemonsPageUseCase(pokemonClient: makePokemonClient())
     }
 
     // MARK: - Use Cases
@@ -26,10 +25,6 @@ final class AppDIContainer {
             pokemonDetailsClient: makePokemonDetailsClient(),
             pokemonImageClient: makePokemonImageClient()
         )
-    }
-
-    private func makeFetchPokemonsPageUseCase() -> DefaultFetchPokemonsPageUseCase {
-        DefaultFetchPokemonsPageUseCase(pokemonClient: makePokemonClient())
     }
 
     // MARK: - Client
