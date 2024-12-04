@@ -50,11 +50,11 @@ extension PokemonListView.ViewModel {
         case .previous: currentPageNumber - 1
         }
 
-        await loadPage(pageNumber: newPageNumber)
+        await loadPage(newPageNumber)
     }
 
     func reload() async {
-        await loadPage(pageNumber: currentPageNumber)
+        await loadPage(currentPageNumber)
     }
 
     func didSelectRow(index: Int) {
@@ -67,7 +67,7 @@ extension PokemonListView.ViewModel {
 // MARK: - Private methods
 
 extension PokemonListView.ViewModel {
-    private func loadPage(pageNumber: Int) async {
+    private func loadPage(_ pageNumber: Int) async {
         guard pageNumber > 0 else { return }
 
         guard currentTask[pageNumber] == nil
