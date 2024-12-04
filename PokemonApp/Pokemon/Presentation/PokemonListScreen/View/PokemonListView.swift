@@ -48,6 +48,7 @@ extension PokemonListView {
             case .success: EmptyView()
             }
         }
+        .task { await viewModel.switchTo(page: .initial) }
         .navigationTitle("Pokemons")
         .toolbar {
             ToolbarItemGroup(placement: .bottomBar) {

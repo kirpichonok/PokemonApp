@@ -36,8 +36,6 @@ extension PokemonListView {
         ) {
             self.fetchPokemonsUseCase = fetchPokemonsUseCase
             self.coordinator = coordinator
-            Task
-                { await switchTo(page: .initial) }
         }
     }
 }
